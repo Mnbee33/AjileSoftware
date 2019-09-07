@@ -6,7 +6,9 @@ public class Game {
     private int itsCurrentThrow = 0;
 
     private int itsCurrentFrame = 1;
-    private boolean firstThrow = true;
+    private boolean firstThrowInFrame = true;
+
+    private int ball = 0;
 
     public void add(int pins) {
         itsThrows[itsCurrentThrow++] = pins;
@@ -15,16 +17,17 @@ public class Game {
     }
 
     private void adjustCurrentFrame(int pins) {
-        if (firstThrow) {
+        if (firstThrowInFrame) {
             if (pins == 10) {   //ストライク
                 itsCurrentFrame++;
             } else {
-                firstThrow = false;
+                firstThrowInFrame = false;
             }
         } else {
-            firstThrow = true;
+            firstThrowInFrame = true;
             itsCurrentFrame++;
         }
+        itsCurrentFrame = Math.min(11, itsCurrentFrame);
     }
 
     public int score() {
@@ -32,28 +35,53 @@ public class Game {
     }
 
     public int scoreForFrame(int theFrame) {
-        int ball = 0;
+        ball = 0;
         int score = 0;
         for (int currentFrame = 0;
              currentFrame < theFrame;
              currentFrame++) {
-            int firstThrow = itsThrows[ball++];
-            if (firstThrow == 10) {
+            if (strike()) {
                 // ストライクの得点計算には次のフレームの合計が必要
-                score += 10 + itsThrows[ball] + itsThrows[ball + 1];
+                ball++;
+                score += 10 + nextTwoBalls();
             } else {
-                int secondThrow = itsThrows[ball++];
-                int frameScore = firstThrow + secondThrow;
-
-                if (frameScore == 10) {
-                    // スペアの得点計算には次のフレームの第1投が必要
-                    score += frameScore + itsThrows[ball];
-                } else {
-                    score += frameScore;
-                }
+                score += handleSecondThrow();
             }
         }
         return score;
+    }
+
+    private boolean strike() {
+        return itsThrows[ball] == 10;
+    }
+
+    private int nextTwoBalls() {
+        return itsThrows[ball] + itsThrows[ball + 1];
+    }
+
+    private int handleSecondThrow() {
+        int score = 0;
+        if (spare()) {
+            // スペアの得点計算には次のフレームの第1投が必要
+            ball += 2;
+            score += 10 + nextBall();
+        } else {
+            score += twoBallsInFrame();
+            ball += 2;
+        }
+        return score;
+    }
+
+    private boolean spare() {
+        return (itsThrows[ball] + itsThrows[ball + 1]) == 10;
+    }
+
+    private int nextBall() {
+        return itsThrows[ball];
+    }
+
+    private int twoBallsInFrame() {
+        return itsThrows[ball] + itsThrows[ball + 1];
     }
 
     public int getCurrentFrame() {
