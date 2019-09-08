@@ -1,90 +1,42 @@
 package boring;
 
 public class Game {
-    private int itsScore = 0;
-    private int[] itsThrows = new int[21];
-    private int itsCurrentThrow = 0;
 
     private int itsCurrentFrame = 1;
     private boolean firstThrowInFrame = true;
 
-    private int ball = 0;
+    private Scorer itsScorer = new Scorer();
 
     public void add(int pins) {
-        itsThrows[itsCurrentThrow++] = pins;
-        itsScore += pins;
+        itsScorer.add(pins);
         adjustCurrentFrame(pins);
     }
 
     private void adjustCurrentFrame(int pins) {
-        if (firstThrowInFrame) {
-            if (pins == 10) {   //ストライク
-                itsCurrentFrame++;
-            } else {
-                firstThrowInFrame = false;
-            }
+        if (lastBallInFrame(pins)) {
+            advanceFrame();
         } else {
-            firstThrowInFrame = true;
-            itsCurrentFrame++;
+            firstThrowInFrame = false;
         }
-        itsCurrentFrame = Math.min(11, itsCurrentFrame);
+    }
+
+    private boolean lastBallInFrame(int pins) {
+        return strike(pins) || !firstThrowInFrame;
+    }
+
+    private boolean strike(int pins) {
+        return firstThrowInFrame && pins == 10;
+    }
+
+    private void advanceFrame() {
+        itsCurrentFrame = Math.min(10, itsCurrentFrame + 1);
     }
 
     public int score() {
-        return scoreForFrame(getCurrentFrame() - 1);
+        return scoreForFrame(itsCurrentFrame);
     }
 
     public int scoreForFrame(int theFrame) {
-        ball = 0;
-        int score = 0;
-        for (int currentFrame = 0;
-             currentFrame < theFrame;
-             currentFrame++) {
-            if (strike()) {
-                // ストライクの得点計算には次のフレームの合計が必要
-                ball++;
-                score += 10 + nextTwoBalls();
-            } else {
-                score += handleSecondThrow();
-            }
-        }
-        return score;
-    }
-
-    private boolean strike() {
-        return itsThrows[ball] == 10;
-    }
-
-    private int nextTwoBalls() {
-        return itsThrows[ball] + itsThrows[ball + 1];
-    }
-
-    private int handleSecondThrow() {
-        int score = 0;
-        if (spare()) {
-            // スペアの得点計算には次のフレームの第1投が必要
-            ball += 2;
-            score += 10 + nextBall();
-        } else {
-            score += twoBallsInFrame();
-            ball += 2;
-        }
-        return score;
-    }
-
-    private boolean spare() {
-        return (itsThrows[ball] + itsThrows[ball + 1]) == 10;
-    }
-
-    private int nextBall() {
-        return itsThrows[ball];
-    }
-
-    private int twoBallsInFrame() {
-        return itsThrows[ball] + itsThrows[ball + 1];
-    }
-
-    public int getCurrentFrame() {
-        return itsCurrentFrame;
+        return itsScorer.scoreForFrame(theFrame);
     }
 }
