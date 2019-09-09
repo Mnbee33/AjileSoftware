@@ -1,6 +1,6 @@
 package design.iterator;
 
-public class BookShelf implements Aggregate {
+public class BookShelf implements Aggregate<Book> {
     private Book[] books;
     private int last = 0;
 
@@ -22,7 +22,7 @@ public class BookShelf implements Aggregate {
     }
 
     @Override
-    public Iterator iterator() {
+    public Iterator<Book> iterator() {
         return new BookShelfIterator(this);
     }
 }

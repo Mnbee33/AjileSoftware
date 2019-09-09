@@ -1,6 +1,6 @@
 package design.iterator;
 
-public class BookShelfIterator implements Iterator {
+public class BookShelfIterator implements Iterator<Book> {
     private BookShelf bookShelf;
     private int index;
 
@@ -15,7 +15,7 @@ public class BookShelfIterator implements Iterator {
     }
 
     @Override
-    public Object next() {
+    public Book next() {
         Book book = bookShelf.getBookAt(index);
         index++;
         return book;
