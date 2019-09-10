@@ -1,17 +1,19 @@
 package design.adapter;
 
-public class PrintBanner extends Banner implements Print {
+public class PrintBanner implements Print {
+    private Banner banner;
+
     public PrintBanner(String string) {
-        super(string);
+        banner = new Banner(string);
     }
 
     @Override
     public void printWeak() {
-        showWithParen();
+        banner.showWithParen();
     }
 
     @Override
     public void printStrong() {
-        showWithAster();
+        banner.showWithAster();
     }
 }
