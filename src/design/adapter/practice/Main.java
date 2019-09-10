@@ -8,7 +8,8 @@ public class Main {
     public static void main(String[] args) {
         FileIO f = new FileProperties();
         try {
-            f.readFromFile(DIR + "file.txt"); // 注意：ファイル名のみ→プロジェクト直下に配置
+            // FIXME ファイル名のみ→プロジェクト直下に配置
+            f.readFromFile(DIR + "file.txt");
             System.out.println(f.getValue("year"));
 
             f.setValue("year", "2004");
