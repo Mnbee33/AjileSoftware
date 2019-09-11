@@ -1,13 +1,13 @@
 package design.template;
 
-public abstract class AbstractDisplay {
-    abstract void open();
+public interface AbstractDisplay {
+    void open();
 
-    abstract void print();
+    void print();
 
-    abstract void close();
+    void close();
 
-    final void display() {
+    default void display() {
         open();
         for (int i = 0; i < 5; i++) {
             print();

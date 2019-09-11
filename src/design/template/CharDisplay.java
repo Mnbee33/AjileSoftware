@@ -1,6 +1,6 @@
 package design.template;
 
-public class CharDisplay extends AbstractDisplay {
+public class CharDisplay implements AbstractDisplay {
     private char ch;
 
     public CharDisplay(char ch) {
@@ -8,17 +8,17 @@ public class CharDisplay extends AbstractDisplay {
     }
 
     @Override
-    void open() {
+    public void open() {
         System.out.print("<<");
     }
 
     @Override
-    void print() {
+    public void print() {
         System.out.print(ch);
     }
 
     @Override
-    void close() {
+    public void close() {
         System.out.println(">>");
     }
 }
