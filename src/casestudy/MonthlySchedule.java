@@ -1,4 +1,4 @@
 package casestudy;
 
-public class MonthlySchedule {
+public class MonthlySchedule implements PaymentSchedule {
 }

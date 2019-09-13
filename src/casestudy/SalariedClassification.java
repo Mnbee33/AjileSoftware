@@ -1,7 +1,13 @@
 package casestudy;
 
-public class SalariedClassification {
+public class SalariedClassification implements PaymentClassification {
+    private double itsSalary;
+
+    public SalariedClassification(double salary) {
+        itsSalary = salary;
+    }
+
     public double getSalary() {
-        return 0;
+        return itsSalary;
     }
 }

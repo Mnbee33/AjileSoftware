@@ -1,31 +1,45 @@
 package casestudy;
 
 public class Employee {
-    public Employee(int itsEmpId, String itsName, String itsAddress) {
+    private int itsEmpId;
+    private String itsName;
+    private String itsAddress;
+
+    private PaymentClassification itsClassification;
+    private PaymentSchedule itsSchedule;
+    private PaymentMethod itsMethod;
+
+    public Employee(int empId, String name, String address) {
+        itsEmpId = empId;
+        itsName = name;
+        itsAddress = address;
     }
 
     public void setClassification(PaymentClassification pc) {
+        itsClassification = pc;
     }
 
     public void setSchedule(PaymentSchedule ps) {
+        itsSchedule = ps;
     }
 
     public void setMethod(PaymentMethod pm) {
+        itsMethod = pm;
     }
 
     public String getName() {
-        return null;
+        return itsName;
     }
 
     public PaymentClassification getClassification() {
-        return null;
+        return itsClassification;
     }
 
     public PaymentSchedule getSchedule() {
-        return null;
+        return itsSchedule;
     }
 
     public PaymentMethod getMethod() {
-        return null;
+        return itsMethod;
     }
 }

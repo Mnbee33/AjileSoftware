@@ -29,4 +29,28 @@ public class TestPayroll {
         HoldMethod hm = (HoldMethod) pm;
         assertNotNull(hm);
     }
+
+    @Test
+    void testAddHourlyEmployee() {
+        int empId = 1;
+        AddHourlyEmployee t = new AddHourlyEmployee(empId, "Bob", "Home", 1000.00);
+        t.execute();
+
+        Employee e = PayrollDatabase.getEmployee(empId);
+        assertNotNull(e);
+        assertEquals("Bob", e.getName());
+
+        PaymentClassification pc = e.getClassification();
+        HourlyClassification hc = (HourlyClassification) pc;
+        assertNotNull(hc);
+        assertEquals(1000.00, hc.getHourlyRate());
+
+        PaymentSchedule ps = e.getSchedule();
+        WeeklySchedule ws = (WeeklySchedule) ps;
+        assertNotNull(ws);
+
+        PaymentMethod pm = e.getMethod();
+        HoldMethod hm = (HoldMethod) pm;
+        assertNotNull(hm);
+    }
 }

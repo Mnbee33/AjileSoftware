@@ -1,9 +1,20 @@
 package casestudy;
 
-public class AddSalariedEmployee {
-    public AddSalariedEmployee(int empId, String bob, String home, double v) {
+public class AddSalariedEmployee extends AddEmployeeTransaction {
+    private double itsSalary;
+
+    public AddSalariedEmployee(int empId, String name, String address, double salary) {
+        super(empId, name, address);
+        itsSalary = salary;
     }
 
-    public void execute() {
+    @Override
+    protected PaymentClassification getClassification() {
+        return new SalariedClassification(itsSalary);
+    }
+
+    @Override
+    protected PaymentSchedule getSchedule() {
+        return new MonthlySchedule();
     }
 }
