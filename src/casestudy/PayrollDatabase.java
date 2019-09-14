@@ -17,4 +17,8 @@ public class PayrollDatabase {
     public static void clear() {
         itsEmployees.clear();
     }
+
+    public static void deleteEmployee(int empId) {
+        itsEmployees.remove(empId);
+    }
 }

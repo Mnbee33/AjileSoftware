@@ -1,6 +1,6 @@
 package casestudy;
 
-public abstract class AddEmployeeTransaction {
+public abstract class AddEmployeeTransaction implements Transaction {
     private int itsEmpId;
     private String itsName;
     private String itsAddress;
