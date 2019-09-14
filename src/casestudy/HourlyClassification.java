@@ -10,4 +10,8 @@ public class HourlyClassification implements PaymentClassification {
     public double getHourlyRate() {
         return itsHourlyRate;
     }
+
+    public TimeCard getTimeCard(int i) {
+        return null;
+    }
 }

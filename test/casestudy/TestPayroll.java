@@ -93,4 +93,25 @@ public class TestPayroll {
         e = PayrollDatabase.getEmployee(empId);
         assertNull(e);
     }
+
+    @Test
+    void testTimeCardTransaction() {
+        int empId = 2;
+        AddHourlyEmployee t = new AddHourlyEmployee(empId, "Bill", "Home", 15.25);
+        t.execute();
+
+        TimeCardTransaction tct = new TimeCardTransaction(20011031, 8.0, empId);
+        tct.execute();
+
+        Employee e = PayrollDatabase.getEmployee(empId);
+        assertNotNull(e);
+
+        PaymentClassification pc = e.getClassification();
+        HourlyClassification hc = (HourlyClassification) pc;
+        assertNotNull(hc);
+
+        TimeCard tc = hc.getTimeCard(20011031);
+        assertNotNull(tc);
+        assertEquals(8.0, tc.getHours());
+    }
 }
