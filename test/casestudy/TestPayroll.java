@@ -1,10 +1,16 @@
 package casestudy;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class TestPayroll {
+    @BeforeEach
+    void setUp() {
+        PayrollDatabase.clear();
+    }
+
     @Test
     void testAddSalariedEmployee() {
         int empId = 1;
@@ -113,5 +119,26 @@ public class TestPayroll {
         TimeCard tc = hc.getTimeCard(20011031);
         assertNotNull(tc);
         assertEquals(8.0, tc.getHours());
+    }
+
+    @Test
+    void testSalesReceiptTransaction() {
+        int empId = 2;
+        AddCommissionedEmployee t = new AddCommissionedEmployee(empId, "Bill", "Home", 1000.00, 15.25);
+        t.execute();
+
+        SalesReceiptTransaction srt = new SalesReceiptTransaction(20011031, 8.0, empId);
+        srt.execute();
+
+        Employee e = PayrollDatabase.getEmployee(empId);
+        assertNotNull(e);
+
+        PaymentClassification pc = e.getClassification();
+        CommissionedClassification cc = (CommissionedClassification) pc;
+        assertNotNull(cc);
+
+        SaleReceipt sr = cc.getSaleReceipt(20011031);
+        assertNotNull(sr);
+        assertEquals(8.0, sr.getAmount());
     }
 }
