@@ -141,4 +141,29 @@ public class TestPayroll {
         assertNotNull(sr);
         assertEquals(8.0, sr.getAmount());
     }
+
+    @Test
+    void testAddServiceCharge() {
+        int empId = 2;
+        AddHourlyEmployee t = new AddHourlyEmployee(empId, "Bill", "Home", 15.25);
+        t.execute();
+
+        TimeCardTransaction tct = new TimeCardTransaction(20011031, 8.0, empId);
+        tct.execute();
+
+        Employee e = PayrollDatabase.getEmployee(empId);
+        assertNotNull(e);
+
+        Affiliation af = new UnionAffiliation(12.5);
+        e.setAffiliation(af);
+
+        int memberId = 86;
+        PayrollDatabase.addUnionMember(memberId, e);
+
+        ServiceChargeTransaction sct = new ServiceChargeTransaction(memberId, 20011031, 12.95);
+        sct.execute();
+
+        double sc = af.getServiceCharge(20011031);
+        assertEquals(12.95, sc, .001);
+    }
 }
