@@ -17,7 +17,7 @@ public class CommissionedClassification implements PaymentClassification {
         return itsSalary;
     }
 
-    public double getCommissionRate() {
+    public double getRate() {
         return itsCommissionRate;
     }
 

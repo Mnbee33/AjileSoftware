@@ -11,7 +11,7 @@ public class HourlyClassification implements PaymentClassification {
         itsHourlyRate = hourlyRate;
     }
 
-    public double getHourlyRate() {
+    public double getRate() {
         return itsHourlyRate;
     }
 
