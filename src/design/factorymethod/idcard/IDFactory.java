@@ -3,19 +3,22 @@ package design.factorymethod.idcard;
 import design.factorymethod.framework.Factory;
 import design.factorymethod.framework.Product;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class IDFactory extends Factory {
-    private List<String> owners = new ArrayList<>();
+    private Map<Integer, IDCard> owners = new HashMap<>();
+    private int lastSerialNo;
 
     @Override
     protected Product createProduct(String owner) {
-        return new IDCard(owner);
+        lastSerialNo++;
+        return new IDCard(owner, lastSerialNo);
     }
 
     @Override
     protected void registerProduct(Product p) {
-        owners.add(((IDCard) p).getOwner());
+        IDCard card = (IDCard) p;
+        owners.put(card.serialNo(), card);
     }
 }
