@@ -261,4 +261,64 @@ public class TestPayroll {
         BiweeklySchedule bs = (BiweeklySchedule) ps;
         assertNotNull(bs);
     }
+
+    @Test
+    void testChangeDirectTransaction() {
+        int empId = 3;
+        AddHourlyEmployee t = new AddHourlyEmployee(empId, "Lance", "Home", 25.72);
+        t.execute();
+
+        ChangeDirectTransaction cdt = new ChangeDirectTransaction(empId, "bank", 10800);
+        cdt.execute();
+
+        Employee e = PayrollDatabase.getEmployee(empId);
+        assertNotNull(e);
+
+        PaymentMethod pm = e.getMethod();
+        DirectMethod dm = (DirectMethod) pm;
+        assertNotNull(dm);
+        assertEquals("bank", dm.getBank());
+        assertEquals(10800, dm.getAccount());
+    }
+
+    @Test
+    void testChangeMailTransaction() {
+        int empId = 3;
+        AddHourlyEmployee t = new AddHourlyEmployee(empId, "Lance", "Home", 25.72);
+        t.execute();
+
+        ChangeMailTransaction cmt = new ChangeMailTransaction(empId, "mailAddress");
+        cmt.execute();
+
+        Employee e = PayrollDatabase.getEmployee(empId);
+        assertNotNull(e);
+
+        PaymentMethod pm = e.getMethod();
+        MailMethod mm = (MailMethod) pm;
+        assertNotNull(mm);
+        assertEquals("mailAddress", mm.getAddress());
+    }
+
+    @Test
+    void testChangeHoldTransaction() {
+        int empId = 3;
+        AddHourlyEmployee t = new AddHourlyEmployee(empId, "Lance", "Home", 25.72);
+        t.execute();
+
+        ChangeMailTransaction cmt = new ChangeMailTransaction(empId, "mailAddress");
+        cmt.execute();
+        Employee e = PayrollDatabase.getEmployee(empId);
+        assertNotNull(e);
+        assertTrue(e.getMethod() instanceof MailMethod);
+
+        ChangeHoldTransaction cht = new ChangeHoldTransaction(empId);
+        cht.execute();
+
+        e = PayrollDatabase.getEmployee(empId);
+        assertNotNull(e);
+
+        PaymentMethod pm = e.getMethod();
+        HoldMethod hm = (HoldMethod) pm;
+        assertNotNull(hm);
+    }
 }
