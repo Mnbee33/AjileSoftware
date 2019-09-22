@@ -1,5 +1,7 @@
 package casestudy;
 
+import java.util.Calendar;
+
 public class Employee {
     private int itsEmpId;
     private String itsName;
@@ -63,5 +65,12 @@ public class Employee {
 
     public void setAddress(String address) {
         itsAddress = address;
+    }
+
+    public boolean isPayDate() {
+        return true;
+    }
+
+    public Object getPayPeriodStartDate(Calendar itsPayDate) {
     }
 }

@@ -1,6 +1,8 @@
 package casestudy;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class PayrollDatabase {
@@ -33,5 +35,9 @@ public class PayrollDatabase {
 
     public static void removeUnionMember(int memberId) {
         itsUnionMembers.remove(memberId);
+    }
+
+    public static List<Integer> getAllEmployeeIds() {
+        return new ArrayList<>(itsEmployees.keySet());
     }
 }

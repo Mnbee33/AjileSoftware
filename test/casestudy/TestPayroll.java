@@ -3,6 +3,9 @@ package casestudy;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class TestPayroll {
@@ -373,5 +376,32 @@ public class TestPayroll {
         NoAffiliation na = (NoAffiliation) af;
         member = PayrollDatabase.getUnionMember(memberId);
         assertEquals(na, member);
+    }
+
+    @Test
+    void testPaySingleSalariedEmployee() {
+        int empId = 1;
+        AddSalariedEmployee t = new AddSalariedEmployee(empId, "Bob", "Home", 1000.0);
+        t.execute();
+
+        Calendar payDate = new GregorianCalendar(2001, Calendar.NOVEMBER, 30);
+        PaydayTransaction pt = new PaydayTransaction(payDate);
+        pt.execute();
+
+        validatePayCheck(pt, empId, payDate, 1000.0);
+    }
+
+    @Test
+    void testPaySingleSalariedEmployeeOnWrongDate() {
+        int empId = 1;
+        AddSalariedEmployee t = new AddSalariedEmployee(empId, "Bob", "Home", 1000.0);
+        t.execute();
+
+        Calendar payDate = new GregorianCalendar(2001, Calendar.NOVEMBER, 29);
+        PaydayTransaction pt = new PaydayTransaction(payDate);
+        pt.execute();
+
+        PayCheck pc = pt.getPayCheck(empId);
+        assertNull(pc);
     }
 }
