@@ -154,10 +154,10 @@ public class TestPayroll {
         Employee e = PayrollDatabase.getEmployee(empId);
         assertNotNull(e);
 
-        Affiliation af = new UnionAffiliation(12.5);
+        int memberId = 86;
+        Affiliation af = new UnionAffiliation(memberId, 8.5);
         e.setAffiliation(af);
 
-        int memberId = 86;
         PayrollDatabase.addUnionMember(memberId, e);
 
         ServiceChargeTransaction sct = new ServiceChargeTransaction(memberId, 20011031, 12.95);
@@ -320,5 +320,58 @@ public class TestPayroll {
         PaymentMethod pm = e.getMethod();
         HoldMethod hm = (HoldMethod) pm;
         assertNotNull(hm);
+    }
+
+    @Test
+    void testChangeMemberTransaction() {
+        int empId = 2;
+        int memberId = 7734;
+        AddHourlyEmployee t = new AddHourlyEmployee(empId, "Bill", "Home", 15.25);
+        t.execute();
+
+        ChangeMemberTransaction cmt = new ChangeMemberTransaction(empId, memberId, 99.42);
+        cmt.execute();
+
+        Employee e = PayrollDatabase.getEmployee(empId);
+        assertNotNull(e);
+
+        Affiliation af = e.getAffiliation();
+        UnionAffiliation uf = (UnionAffiliation) af;
+        assertNotNull(uf);
+        assertEquals(99.42, uf.getDues());
+
+        Employee member = PayrollDatabase.getUnionMember(memberId);
+        assertNotNull(member);
+        assertEquals(e, member);
+    }
+
+    @Test
+    void testChangeUnaffiliatedTransaction() {
+        int empId = 2;
+        int memberId = 7734;
+        AddHourlyEmployee t = new AddHourlyEmployee(empId, "Bill", "Home", 15.25);
+        t.execute();
+
+        ChangeMemberTransaction cmt = new ChangeMemberTransaction(empId, memberId, 99.42);
+        cmt.execute();
+
+        Employee e = PayrollDatabase.getEmployee(empId);
+        assertNotNull(e);
+
+        Affiliation af = e.getAffiliation();
+        UnionAffiliation uf = (UnionAffiliation) af;
+        assertNotNull(uf);
+        assertEquals(99.42, uf.getDues());
+
+        Employee member = PayrollDatabase.getUnionMember(memberId);
+        assertEquals(e, member);
+
+        ChangeUnaffiliatedTransaction cut = new ChangeUnaffiliatedTransaction(empId);
+        cut.execute();
+
+        af = e.getAffiliation();
+        NoAffiliation na = (NoAffiliation) af;
+        member = PayrollDatabase.getUnionMember(memberId);
+        assertEquals(na, member);
     }
 }
