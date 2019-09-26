@@ -10,4 +10,9 @@ public class SalariedClassification implements PaymentClassification {
     public double getSalary() {
         return itsSalary;
     }
+
+    @Override
+    public double calculatePay(PayCheck pc) {
+        return 0;
+    }
 }

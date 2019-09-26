@@ -17,11 +17,15 @@ public class PaydayTransaction implements Transaction {
         List<Integer> empIds = PayrollDatabase.getAllEmployeeIds();
         for (int empId : empIds) {
             Employee e = PayrollDatabase.getEmployee(empId);
-            if (e.isPayDate()) {
+            if (e.isPayDate(itsPayDate)) {
                 PayCheck pc = new PayCheck(e.getPayPeriodStartDate(itsPayDate), itsPayDate);
                 itsPayChecks.put(empId, pc);
                 e.payday(pc);
             }
         }
+    }
+
+    public PayCheck getPayCheck(int empId) {
+        return itsPayChecks.get(empId);
     }
 }

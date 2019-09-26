@@ -28,4 +28,9 @@ public class CommissionedClassification implements PaymentClassification {
     public void addSaleReceipt(SaleReceipt saleReceipt) {
         saleReceipts.put(saleReceipt.getDate(), saleReceipt);
     }
+
+    @Override
+    public double calculatePay(PayCheck pc) {
+        return 0;
+    }
 }

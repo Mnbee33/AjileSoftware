@@ -67,10 +67,21 @@ public class Employee {
         itsAddress = address;
     }
 
-    public boolean isPayDate() {
-        return true;
+    public boolean isPayDate(Calendar payDate) {
+        return itsSchedule.isPayDate(payDate);
     }
 
-    public Object getPayPeriodStartDate(Calendar itsPayDate) {
+    public Calendar getPayPeriodStartDate(Calendar payDate) {
+        return itsSchedule.getPayPeriodStartDate(payDate);
+    }
+
+    public void payday(PayCheck pc) {
+        double grossPay = itsClassification.calculatePay(pc);
+        double deductions = itsAffiliation.calculateDeductions(pc);
+        double netPay = grossPay - deductions;
+        pc.setGrossPay(grossPay);
+        pc.setDeductions(deductions);
+        pc.netPay(netPay);
+        itsMethod.pay(pc);
     }
 }

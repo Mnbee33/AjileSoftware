@@ -16,4 +16,9 @@ public class DirectMethod implements PaymentMethod {
     public long getAccount() {
         return itsAccount;
     }
+
+    @Override
+    public void pay(PayCheck pc) {
+
+    }
 }

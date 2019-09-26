@@ -22,4 +22,9 @@ public class HourlyClassification implements PaymentClassification {
     public void addTimeCard(TimeCard timeCard) {
         timeCards.put(timeCard.getDate(), timeCard);
     }
+
+    @Override
+    public double calculatePay(PayCheck pc) {
+        return 0;
+    }
 }

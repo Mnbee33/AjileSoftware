@@ -10,4 +10,9 @@ public class MailMethod implements PaymentMethod {
     public String getAddress() {
         return itsAddress;
     }
+
+    @Override
+    public void pay(PayCheck pc) {
+
+    }
 }

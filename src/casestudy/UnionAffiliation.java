@@ -18,6 +18,11 @@ public class UnionAffiliation implements Affiliation {
         return serviceCharges.get(date);
     }
 
+    @Override
+    public double calculateDeductions(PayCheck pc) {
+        return 0;
+    }
+
     public void addServiceCharge(long date, double amount) {
         serviceCharges.put(date, amount);
     }
