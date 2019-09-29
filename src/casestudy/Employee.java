@@ -17,6 +17,7 @@ public class Employee {
         itsEmpId = empId;
         itsName = name;
         itsAddress = address;
+        itsAffiliation = new NoAffiliation();
     }
 
     public void setClassification(PaymentClassification pc) {

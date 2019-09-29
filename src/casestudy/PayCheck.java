@@ -4,15 +4,15 @@ import java.util.Calendar;
 
 public class PayCheck {
     private Calendar itsPayPeriodStartDate;
-    private Calendar itsPayDate;
+    private Calendar itsPayPeriodEndDate;
 
     private double itsGrossPay;
     private double itsDeductions;
     private double itsNetPay;
 
-    public PayCheck(Calendar payPeriodStartDate, Calendar payDate) {
+    public PayCheck(Calendar payPeriodStartDate, Calendar payPeriodEndDate) {
         itsPayPeriodStartDate = payPeriodStartDate;
-        itsPayDate = payDate;
+        itsPayPeriodEndDate = payPeriodEndDate;
     }
 
     public void setGrossPay(double grossPay) {
@@ -25,5 +25,21 @@ public class PayCheck {
 
     public void netPay(double netPay) {
         itsNetPay = netPay;
+    }
+
+    public double getGrossPay() {
+        return itsGrossPay;
+    }
+
+    public double getDeductions() {
+        return itsDeductions;
+    }
+
+    public double getNetPay() {
+        return itsNetPay;
+    }
+
+    public Calendar getPayPeriodEndDate() {
+        return itsPayPeriodEndDate;
     }
 }

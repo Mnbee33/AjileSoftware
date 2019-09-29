@@ -391,11 +391,6 @@ public class TestPayroll {
         validatePayCheck(pt, empId, payDate, 1000.0);
     }
 
-    private void validatePayCheck(PaydayTransaction pt, int empId, Calendar payDate, double salary) {
-        PayCheck pc = pt.getPayCheck(empId);
-        assertNotNull(pc);
-    }
-
     @Test
     void testPaySingleSalariedEmployeeOnWrongDate() {
         int empId = 1;
@@ -408,5 +403,15 @@ public class TestPayroll {
 
         PayCheck pc = pt.getPayCheck(empId);
         assertNull(pc);
+    }
+
+    private void validatePayCheck(PaydayTransaction pt, int empId, Calendar payDate, double pay) {
+        PayCheck pc = pt.getPayCheck(empId);
+        assertNotNull(pc);
+
+        assertEquals(pc.getPayPeriodEndDate(), payDate);
+        assertEquals(pay, pc.getGrossPay());
+        assertEquals(0.0, pc.getDeductions());
+        assertEquals(pay, pc.getNetPay());
     }
 }
