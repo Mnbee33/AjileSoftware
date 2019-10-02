@@ -405,12 +405,26 @@ public class TestPayroll {
         assertNull(pc);
     }
 
+    @Test
+    void testPaySingleHourlyEmployeeNoTimeCards() {
+        int empId = 2;
+        AddHourlyEmployee t = new AddHourlyEmployee(empId, "Bill", "Home", 15.25);
+        t.execute();
+
+        Calendar payDate = new GregorianCalendar(2001, Calendar.NOVEMBER, 9);
+        PaydayTransaction pt = new PaydayTransaction(payDate);
+        pt.execute();
+
+        validatePayCheck(pt, empId, payDate, 0.0);
+    }
+
     private void validatePayCheck(PaydayTransaction pt, int empId, Calendar payDate, double pay) {
         PayCheck pc = pt.getPayCheck(empId);
         assertNotNull(pc);
 
         assertEquals(pc.getPayPeriodEndDate(), payDate);
         assertEquals(pay, pc.getGrossPay());
+        assertEquals("Hold", pc.getField("Disposition"));
         assertEquals(0.0, pc.getDeductions());
         assertEquals(pay, pc.getNetPay());
     }
