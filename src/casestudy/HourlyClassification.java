@@ -1,11 +1,12 @@
 package casestudy;
 
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
 public class HourlyClassification implements PaymentClassification {
     private double itsHourlyRate;
-    private Map<Long, TimeCard> timeCards = new HashMap<>();
+    private Map<Calendar, TimeCard> timeCards = new HashMap<>();
 
     public HourlyClassification(double hourlyRate) {
         itsHourlyRate = hourlyRate;
@@ -15,7 +16,7 @@ public class HourlyClassification implements PaymentClassification {
         return itsHourlyRate;
     }
 
-    public TimeCard getTimeCard(long date) {
+    public TimeCard getTimeCard(Calendar date) {
         return timeCards.get(date);
     }
 
@@ -25,6 +26,10 @@ public class HourlyClassification implements PaymentClassification {
 
     @Override
     public double calculatePay(PayCheck pc) {
-        return 0;
+        double totalPay = 0;
+        for (TimeCard tc : timeCards.values()) {
+            totalPay += itsHourlyRate * tc.getHours();
+        }
+        return totalPay;
     }
 }

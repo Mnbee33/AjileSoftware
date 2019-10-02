@@ -1,15 +1,17 @@
 package casestudy;
 
+import java.util.Calendar;
+
 public class TimeCard {
-    private long itsDate;
+    private Calendar itsDate;
     private double itsHours;
 
-    public TimeCard(long date, double hours) {
+    public TimeCard(Calendar date, double hours) {
         itsDate = date;
         itsHours = hours;
     }
 
-    public long getDate() {
+    public Calendar getDate() {
         return itsDate;
     }
 

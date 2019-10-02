@@ -1,11 +1,13 @@
 package casestudy;
 
+import java.util.Calendar;
+
 public class TimeCardTransaction implements Transaction {
-    private long itsDate;
+    private Calendar itsDate;
     private double itsHours;
     private int itsEmpId;
 
-    public TimeCardTransaction(long date, double hours, int empId) {
+    public TimeCardTransaction(Calendar date, double hours, int empId) {
         itsDate = date;
         itsHours = hours;
         itsEmpId = empId;
