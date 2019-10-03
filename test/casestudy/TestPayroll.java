@@ -436,6 +436,94 @@ public class TestPayroll {
         validatePayCheck(pt, empId, payDate, 30.5);
     }
 
+    @Test
+    void testPaySingleHourlyEmployeeOverOneTimeCard() {
+        int empId = 2;
+        AddHourlyEmployee t = new AddHourlyEmployee(empId, "Bill", "Home", 15.25);
+        t.execute();
+
+        Calendar payDate = new GregorianCalendar(2001, Calendar.NOVEMBER, 9);
+        TimeCardTransaction tc = new TimeCardTransaction(payDate, 9.0, empId);
+        tc.execute();
+
+        PaydayTransaction pt = new PaydayTransaction(payDate);
+        pt.execute();
+
+        validatePayCheck(pt, empId, payDate, (8 + 1.5) * 15.25);
+    }
+
+    @Test
+    void testPaySingleHourlyEmployeeOnWrongDate() {
+        int empId = 2;
+        AddHourlyEmployee t = new AddHourlyEmployee(empId, "Bill", "Home", 15.25);
+        t.execute();
+
+        Calendar payDate = new GregorianCalendar(2001, Calendar.NOVEMBER, 8);
+        TimeCardTransaction tc = new TimeCardTransaction(payDate, 9.0, empId);
+        tc.execute();
+
+        PaydayTransaction pt = new PaydayTransaction(payDate);
+        pt.execute();
+
+        PayCheck pc = pt.getPayCheck(empId);
+        assertNull(pc);
+    }
+
+    @Test
+    void testPaySingleHourlyEmployeeTwoTimeCards() {
+        int empId = 2;
+        AddHourlyEmployee t = new AddHourlyEmployee(empId, "Bill", "Home", 15.25);
+        t.execute();
+
+        Calendar payDate = new GregorianCalendar(2001, Calendar.NOVEMBER, 9);
+        TimeCardTransaction tc = new TimeCardTransaction(payDate, 2.0, empId);
+        tc.execute();
+
+        Calendar payDate2 = new GregorianCalendar(2001, Calendar.NOVEMBER, 8);
+        TimeCardTransaction tc2 = new TimeCardTransaction(payDate2, 5.0, empId);
+        tc2.execute();
+
+        PaydayTransaction pt = new PaydayTransaction(payDate);
+        pt.execute();
+
+        validatePayCheck(pt, empId, payDate, 7 * 15.25);
+    }
+
+    @Test
+    void testPaySingleHourlyEmployeeWithTimeCardsSpanningTwoPayPeriod() {
+        int empId = 2;
+        AddHourlyEmployee t = new AddHourlyEmployee(empId, "Bill", "Home", 15.25);
+        t.execute();
+
+        Calendar payDate = new GregorianCalendar(2001, Calendar.NOVEMBER, 9);
+        Calendar dateInPreviousPayPeriod = new GregorianCalendar(2001, Calendar.NOVEMBER, 2);
+
+        TimeCardTransaction tc = new TimeCardTransaction(payDate, 2.0, empId);
+        tc.execute();
+
+        TimeCardTransaction tc2 = new TimeCardTransaction(dateInPreviousPayPeriod, 5.0, empId);
+        tc2.execute();
+
+        PaydayTransaction pt = new PaydayTransaction(payDate);
+        pt.execute();
+
+        validatePayCheck(pt, empId, payDate, 2 * 15.25);
+    }
+
+    @Test
+    void testPayCommissionedEmployeeNoSalesReceipts() {
+        int empId = 2;
+        AddCommissionedEmployee t = new AddCommissionedEmployee(empId, "Lance", "Home", 2500, 3.2);
+        t.execute();
+
+        Calendar payDate = new GregorianCalendar(2001, Calendar.NOVEMBER, 9);
+
+        PaydayTransaction pt = new PaydayTransaction(payDate);
+        pt.execute();
+
+        validatePayCheck(pt, empId, payDate, 2500);
+    }
+
     private void validatePayCheck(PaydayTransaction pt, int empId, Calendar payDate, double pay) {
         PayCheck pc = pt.getPayCheck(empId);
         assertNotNull(pc);

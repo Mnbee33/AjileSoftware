@@ -28,8 +28,23 @@ public class HourlyClassification implements PaymentClassification {
     public double calculatePay(PayCheck pc) {
         double totalPay = 0;
         for (TimeCard tc : timeCards.values()) {
-            totalPay += itsHourlyRate * tc.getHours();
+            if (isInPayPeriod(pc, tc)) {
+                if (tc.getHours() > 8) {
+                    totalPay += itsHourlyRate * 8 + itsHourlyRate * (tc.getHours() - 8) * 1.5;
+                } else {
+                    totalPay += itsHourlyRate * tc.getHours();
+                }
+            }
         }
         return totalPay;
+    }
+
+    private boolean isInPayPeriod(PayCheck pc, TimeCard tc) {
+        Calendar timeCardDate = tc.getDate();
+        Calendar payPeriodEndDate = (Calendar) pc.getPayPeriodEndDate().clone();
+        Calendar payPeriodStartDate = (Calendar) pc.getPayPeriodEndDate().clone();
+        payPeriodStartDate.add(Calendar.DATE, -5);
+        return (timeCardDate.compareTo(payPeriodStartDate) >= 0)
+                && (timeCardDate.compareTo(payPeriodEndDate) <= 0);
     }
 }
