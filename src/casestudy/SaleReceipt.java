@@ -1,15 +1,17 @@
 package casestudy;
 
+import java.util.Calendar;
+
 public class SaleReceipt {
-    private long itsDate;
+    private Calendar itsDate;
     private double itsAmount;
 
-    public SaleReceipt(long date, double amount) {
+    public SaleReceipt(Calendar date, double amount) {
         itsDate = date;
         itsAmount = amount;
     }
 
-    public long getDate() {
+    public Calendar getDate() {
         return itsDate;
     }
 

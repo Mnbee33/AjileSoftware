@@ -131,7 +131,8 @@ public class TestPayroll {
         AddCommissionedEmployee t = new AddCommissionedEmployee(empId, "Bill", "Home", 1000.00, 15.25);
         t.execute();
 
-        SalesReceiptTransaction srt = new SalesReceiptTransaction(20011031, 8.0, empId);
+        Calendar date = new GregorianCalendar(2001, Calendar.NOVEMBER, 31);
+        SalesReceiptTransaction srt = new SalesReceiptTransaction(date, 8.0, empId);
         srt.execute();
 
         Employee e = PayrollDatabase.getEmployee(empId);
@@ -141,7 +142,7 @@ public class TestPayroll {
         CommissionedClassification cc = (CommissionedClassification) pc;
         assertNotNull(cc);
 
-        SaleReceipt sr = cc.getSaleReceipt(20011031);
+        SaleReceipt sr = cc.getSaleReceipt(date);
         assertNotNull(sr);
         assertEquals(8.0, sr.getAmount());
     }
@@ -522,6 +523,84 @@ public class TestPayroll {
         pt.execute();
 
         validatePayCheck(pt, empId, payDate, 2500);
+    }
+
+    @Test
+    void testPayCommissionedEmployeeOneSalesReceipt() {
+        int empId = 2;
+        AddCommissionedEmployee t = new AddCommissionedEmployee(empId, "Lance", "Home", 2500, 3.2);
+        t.execute();
+
+        Calendar payDate = new GregorianCalendar(2001, Calendar.NOVEMBER, 9);
+
+        SalesReceiptTransaction srt = new SalesReceiptTransaction(payDate, 8.0, empId);
+        srt.execute();
+
+        PaydayTransaction pt = new PaydayTransaction(payDate);
+        pt.execute();
+
+        validatePayCheck(pt, empId, payDate, 2500 + 8.0 * 3.2);
+    }
+
+    @Test
+    void testPayCommissionedEmployeeTwoSalesReceipt() {
+        int empId = 2;
+        AddCommissionedEmployee t = new AddCommissionedEmployee(empId, "Lance", "Home", 2500, 3.2);
+        t.execute();
+
+        Calendar payDate = new GregorianCalendar(2001, Calendar.NOVEMBER, 9);
+        SalesReceiptTransaction srt = new SalesReceiptTransaction(payDate, 8.0, empId);
+        srt.execute();
+
+        SalesReceiptTransaction srt2 = new SalesReceiptTransaction(
+                new GregorianCalendar(2001, Calendar.NOVEMBER, 8), 7.0, empId);
+        srt2.execute();
+
+        PaydayTransaction pt = new PaydayTransaction(payDate);
+        pt.execute();
+
+        validatePayCheck(pt, empId, payDate, 2500 + ((8.0 + 7.0) * 3.2));
+    }
+
+    @Test
+    void testPayCommissionedEmployeeOnWrongDate() {
+        int empId = 2;
+        AddCommissionedEmployee t = new AddCommissionedEmployee(empId, "Lance", "Home", 2500, 3.2);
+        t.execute();
+
+        Calendar payDate = new GregorianCalendar(2001, Calendar.NOVEMBER, 16);
+        SalesReceiptTransaction srt = new SalesReceiptTransaction(payDate, 8.0, empId);
+        srt.execute();
+
+        PaydayTransaction pt = new PaydayTransaction(payDate);
+        pt.execute();
+
+        PayCheck pc = pt.getPayCheck(empId);
+        assertNull(pc);
+    }
+
+    @Test
+    void testPayCommissionedEmployeeMultiSalesReceipts() {
+        int empId = 2;
+        AddCommissionedEmployee t = new AddCommissionedEmployee(empId, "Lance", "Home", 2500, 3.2);
+        t.execute();
+
+        Calendar payDate = new GregorianCalendar(2001, Calendar.NOVEMBER, 9);
+        SalesReceiptTransaction srt = new SalesReceiptTransaction(payDate, 8.0, empId);
+        srt.execute();
+
+        SalesReceiptTransaction srt2 = new SalesReceiptTransaction(
+                new GregorianCalendar(2001, Calendar.OCTOBER, 26), 7.0, empId);
+        srt2.execute();
+
+        SalesReceiptTransaction srt3 = new SalesReceiptTransaction(
+                new GregorianCalendar(2001, Calendar.NOVEMBER, 10), 6.0, empId);
+        srt3.execute();
+
+        PaydayTransaction pt = new PaydayTransaction(payDate);
+        pt.execute();
+
+        validatePayCheck(pt, empId, payDate, 2500 + (8.0 * 3.2));
     }
 
     private void validatePayCheck(PaydayTransaction pt, int empId, Calendar payDate, double pay) {
