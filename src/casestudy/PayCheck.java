@@ -46,4 +46,8 @@ public class PayCheck {
     public String getField(String str) {
         return "Hold";
     }
+
+    public Calendar getPayPeriodStartDate() {
+        return itsPayPeriodStartDate;
+    }
 }
