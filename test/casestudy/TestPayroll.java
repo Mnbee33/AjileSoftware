@@ -603,6 +603,30 @@ public class TestPayroll {
         validatePayCheck(pt, empId, payDate, 2500 + (8.0 * 3.2));
     }
 
+    @Test
+    void testSalariedUnionMemberDues() {
+        int empId = 1;
+        AddSalariedEmployee t = new AddSalariedEmployee(empId, "Bob", "Home", 1000.0);
+        t.execute();
+
+        int memberId = 7734;
+        ChangeMemberTransaction cmt = new ChangeMemberTransaction(empId, memberId, 9.42);
+        cmt.execute();
+
+        Calendar payDate = new GregorianCalendar(2001, Calendar.NOVEMBER, 30);
+        int fridays = 5;    // 2011年11月に金曜日は5日あった
+        PaydayTransaction pt = new PaydayTransaction(payDate);
+        pt.execute();
+
+        PayCheck pc = pt.getPayCheck(empId);
+        assertNotNull(pc);
+        assertEquals(payDate, pc.getPayPeriodEndDate());
+        assertEquals(1000.0, pc.getGrossPay());
+        assertEquals("Hold", pc.getField("Disposition"));
+        assertEquals(fridays * 9.42, pc.getDeductions());
+        assertEquals(1000.0 - (fridays * 9.42), pc.getNetPay());
+    }
+
     private void validatePayCheck(PaydayTransaction pt, int empId, Calendar payDate, double pay) {
         PayCheck pc = pt.getPayCheck(empId);
         assertNotNull(pc);
