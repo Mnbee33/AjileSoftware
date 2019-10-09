@@ -1,12 +1,13 @@
 package casestudy;
 
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
 public class UnionAffiliation implements Affiliation {
     private double itsDues;
     private int itsMemberId;
-    private Map<Long, Double> serviceCharges = new HashMap<>();
+    private Map<Calendar, ServiceCharge> itsServiceCharges = new HashMap<>();
 
     public UnionAffiliation(int memberId, double dues) {
         itsMemberId = memberId;
@@ -14,17 +15,30 @@ public class UnionAffiliation implements Affiliation {
     }
 
     @Override
-    public double getServiceCharge(long date) {
-        return serviceCharges.get(date);
+    public double getServiceCharge(Calendar date) {
+        return itsServiceCharges.get(date).getAmount();
     }
 
     @Override
     public double calculateDeductions(PayCheck pc) {
+        double totalServiceCharge = 0;
+        double totalDues = 0;
+        for (ServiceCharge sc : itsServiceCharges.values()) {
+            if (Date.isBetween(sc.getDate(), pc.getPayPeriodStartDate(), pc.getPayPeriodEndDate())) {
+                totalServiceCharge += sc.getAmount();
+            }
+        }
+        int fridays = numberOfFridaysInPeriod(pc.getPayPeriodStartDate(), pc.getPayPeriodEndDate());
+        totalDues = itsDues * fridays;
+        return totalDues + totalServiceCharge;
+    }
+
+    private int numberOfFridaysInPeriod(Calendar payPeriodStartDate, Calendar payPeriodEndDate) {
         return 0;
     }
 
-    public void addServiceCharge(long date, double amount) {
-        serviceCharges.put(date, amount);
+    public void addServiceCharge(Calendar date, double amount) {
+        itsServiceCharges.put(date, new ServiceCharge(date, amount));
     }
 
     public double getDues() {
@@ -34,4 +48,5 @@ public class UnionAffiliation implements Affiliation {
     public int getMemberId() {
         return itsMemberId;
     }
+
 }

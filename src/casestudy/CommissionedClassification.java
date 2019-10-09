@@ -34,15 +34,10 @@ public class CommissionedClassification implements PaymentClassification {
     public double calculatePay(PayCheck pc) {
         double totalPay = itsSalary;
         for (SaleReceipt receipt : itsSaleReceipts.values()) {
-            if (isPayPeriod(pc, receipt)) {
+            if (isInPayPeriod(receipt.getDate(), pc)) {
                 totalPay += receipt.getAmount() * itsCommissionRate;
             }
         }
         return totalPay;
-    }
-
-    private boolean isPayPeriod(PayCheck pc, SaleReceipt receipt) {
-        return (receipt.getDate().compareTo(pc.getPayPeriodStartDate()) >= 0)
-                && (receipt.getDate().compareTo(pc.getPayPeriodEndDate()) <= 0);
     }
 }

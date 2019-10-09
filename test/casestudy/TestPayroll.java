@@ -166,10 +166,10 @@ public class TestPayroll {
 
         PayrollDatabase.addUnionMember(memberId, e);
 
-        ServiceChargeTransaction sct = new ServiceChargeTransaction(memberId, 20011031, 12.95);
+        ServiceChargeTransaction sct = new ServiceChargeTransaction(memberId, payDate, 12.95);
         sct.execute();
 
-        double sc = af.getServiceCharge(20011031);
+        double sc = af.getServiceCharge(payDate);
         assertEquals(12.95, sc, .001);
     }
 

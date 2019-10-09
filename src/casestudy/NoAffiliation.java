@@ -1,8 +1,10 @@
 package casestudy;
 
+import java.util.Calendar;
+
 public class NoAffiliation implements Affiliation {
     @Override
-    public double getServiceCharge(long date) {
+    public double getServiceCharge(Calendar date) {
         return 0;
     }
 
