@@ -22,7 +22,7 @@ public class UnionAffiliation implements Affiliation {
     @Override
     public double calculateDeductions(PayCheck pc) {
         double totalServiceCharge = 0;
-        double totalDues = 0;
+        double totalDues;
         for (ServiceCharge sc : itsServiceCharges.values()) {
             if (Date.isBetween(sc.getDate(), pc.getPayPeriodStartDate(), pc.getPayPeriodEndDate())) {
                 totalServiceCharge += sc.getAmount();
@@ -34,7 +34,16 @@ public class UnionAffiliation implements Affiliation {
     }
 
     private int numberOfFridaysInPeriod(Calendar payPeriodStartDate, Calendar payPeriodEndDate) {
-        return 0;
+        int fridays = 0;
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(payPeriodStartDate.getTime());
+        while (cal.compareTo(payPeriodEndDate) <= 0) {
+            if (cal.get(Calendar.DAY_OF_WEEK) == Calendar.FRIDAY) {
+                fridays++;
+            }
+            cal.add(Calendar.DAY_OF_MONTH, 1);
+        }
+        return fridays;
     }
 
     public void addServiceCharge(Calendar date, double amount) {
