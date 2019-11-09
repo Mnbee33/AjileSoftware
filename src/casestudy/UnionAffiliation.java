@@ -1,13 +1,14 @@
 package casestudy;
 
-import java.util.Calendar;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
 public class UnionAffiliation implements Affiliation {
     private double itsDues;
     private int itsMemberId;
-    private Map<Calendar, ServiceCharge> itsServiceCharges = new HashMap<>();
+    private Map<LocalDate, ServiceCharge> itsServiceCharges = new HashMap<>();
 
     public UnionAffiliation(int memberId, double dues) {
         itsMemberId = memberId;
@@ -15,7 +16,7 @@ public class UnionAffiliation implements Affiliation {
     }
 
     @Override
-    public double getServiceCharge(Calendar date) {
+    public double getServiceCharge(LocalDate date) {
         return itsServiceCharges.get(date).getAmount();
     }
 
@@ -33,20 +34,19 @@ public class UnionAffiliation implements Affiliation {
         return totalDues + totalServiceCharge;
     }
 
-    private int numberOfFridaysInPeriod(Calendar payPeriodStartDate, Calendar payPeriodEndDate) {
+    private int numberOfFridaysInPeriod(LocalDate payPeriodStartDate, LocalDate payPeriodEndDate) {
         int fridays = 0;
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(payPeriodStartDate.getTime());
-        while (cal.compareTo(payPeriodEndDate) <= 0) {
-            if (cal.get(Calendar.DAY_OF_WEEK) == Calendar.FRIDAY) {
+        LocalDate date = payPeriodStartDate;
+        while (!date.isAfter(payPeriodEndDate)) {
+            if (date.getDayOfWeek().equals(DayOfWeek.FRIDAY)) {
                 fridays++;
             }
-            cal.add(Calendar.DAY_OF_MONTH, 1);
+            date = date.plusDays(1);
         }
         return fridays;
     }
 
-    public void addServiceCharge(Calendar date, double amount) {
+    public void addServiceCharge(LocalDate date, double amount) {
         itsServiceCharges.put(date, new ServiceCharge(date, amount));
     }
 

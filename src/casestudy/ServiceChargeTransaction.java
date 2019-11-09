@@ -1,13 +1,13 @@
 package casestudy;
 
-import java.util.Calendar;
+import java.time.LocalDate;
 
 public class ServiceChargeTransaction implements Transaction {
     private int itsMemberId;
-    private Calendar itsDate;
+    private LocalDate itsDate;
     private double itsAmount;
 
-    public ServiceChargeTransaction(int memberId, Calendar date, double amount) {
+    public ServiceChargeTransaction(int memberId, LocalDate date, double amount) {
         itsMemberId = memberId;
         itsDate = date;
         itsAmount = amount;

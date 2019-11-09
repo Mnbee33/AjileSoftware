@@ -1,24 +1,19 @@
 package casestudy;
 
-import java.util.Calendar;
+import java.time.LocalDate;
 
 public class MonthlySchedule implements PaymentSchedule {
     @Override
-    public Calendar getPayPeriodStartDate(Calendar payDate) {
-        Calendar startDate = Calendar.getInstance();
-        startDate.setTime(payDate.getTime());
-        startDate.set(Calendar.DAY_OF_MONTH, 1);
-        return startDate;
+    public LocalDate getPayPeriodStartDate(LocalDate payDate) {
+        return payDate.withDayOfMonth(1);
     }
 
     @Override
-    public boolean isPayDate(Calendar payDate) {
+    public boolean isPayDate(LocalDate payDate) {
         return isLastDayOfMonth(payDate);
     }
 
-    private boolean isLastDayOfMonth(Calendar date) {
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(date.getTime());
-        return (cal.getActualMaximum(Calendar.DATE) == cal.get(Calendar.DATE));
+    private boolean isLastDayOfMonth(LocalDate date) {
+        return date.getDayOfMonth() == date.getMonth().maxLength();
     }
 }

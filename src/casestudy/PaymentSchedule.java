@@ -1,9 +1,9 @@
 package casestudy;
 
-import java.util.Calendar;
+import java.time.LocalDate;
 
 public interface PaymentSchedule {
-    Calendar getPayPeriodStartDate(Calendar payDate);
+    LocalDate getPayPeriodStartDate(LocalDate payDate);
 
-    boolean isPayDate(Calendar theDate);
+    boolean isPayDate(LocalDate theDate);
 }

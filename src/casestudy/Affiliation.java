@@ -1,9 +1,9 @@
 package casestudy;
 
-import java.util.Calendar;
+import java.time.LocalDate;
 
 public interface Affiliation {
-    double getServiceCharge(Calendar date);
+    double getServiceCharge(LocalDate date);
 
     double calculateDeductions(PayCheck pc);
 }

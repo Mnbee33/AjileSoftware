@@ -1,15 +1,15 @@
 package casestudy;
 
-import java.util.Calendar;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class PaydayTransaction implements Transaction {
-    private Calendar itsPayDate;
+    private LocalDate itsPayDate;
     private Map<Integer, PayCheck> itsPayChecks = new HashMap<>();
 
-    public PaydayTransaction(Calendar payDate) {
+    public PaydayTransaction(LocalDate payDate) {
         itsPayDate = payDate;
     }
 

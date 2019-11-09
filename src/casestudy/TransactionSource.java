@@ -1,5 +1,7 @@
 package casestudy;
 
+import java.util.List;
+
 public interface TransactionSource {
-    Transaction getTransaction();
+    List<Transaction> getTransactions();
 }

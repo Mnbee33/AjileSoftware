@@ -1,17 +1,17 @@
 package casestudy;
 
-import java.util.Calendar;
+import java.time.LocalDate;
 
 public class TimeCard {
-    private Calendar itsDate;
+    private LocalDate itsDate;
     private double itsHours;
 
-    public TimeCard(Calendar date, double hours) {
+    public TimeCard(LocalDate date, double hours) {
         itsDate = date;
         itsHours = hours;
     }
 
-    public Calendar getDate() {
+    public LocalDate getDate() {
         return itsDate;
     }
 

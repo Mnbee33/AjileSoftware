@@ -1,16 +1,16 @@
 package casestudy;
 
-import java.util.Calendar;
+import java.time.LocalDate;
 
 public class PayCheck {
-    private Calendar itsPayPeriodStartDate;
-    private Calendar itsPayPeriodEndDate;
+    private LocalDate itsPayPeriodStartDate;
+    private LocalDate itsPayPeriodEndDate;
 
     private double itsGrossPay;
     private double itsDeductions;
     private double itsNetPay;
 
-    public PayCheck(Calendar payPeriodStartDate, Calendar payPeriodEndDate) {
+    public PayCheck(LocalDate payPeriodStartDate, LocalDate payPeriodEndDate) {
         itsPayPeriodStartDate = payPeriodStartDate;
         itsPayPeriodEndDate = payPeriodEndDate;
     }
@@ -39,7 +39,7 @@ public class PayCheck {
         return itsNetPay;
     }
 
-    public Calendar getPayPeriodEndDate() {
+    public LocalDate getPayPeriodEndDate() {
         return itsPayPeriodEndDate;
     }
 
@@ -47,7 +47,7 @@ public class PayCheck {
         return "Hold";
     }
 
-    public Calendar getPayPeriodStartDate() {
+    public LocalDate getPayPeriodStartDate() {
         return itsPayPeriodStartDate;
     }
 }

@@ -1,17 +1,17 @@
 package casestudy;
 
-import java.util.Calendar;
+import java.time.LocalDate;
 
 public class ServiceCharge {
-    private Calendar itsDate;
+    private LocalDate itsDate;
     private double itsAmount;
 
-    public ServiceCharge(Calendar date, double amount) {
+    public ServiceCharge(LocalDate date, double amount) {
         itsDate = date;
         itsAmount = amount;
     }
 
-    public Calendar getDate() {
+    public LocalDate getDate() {
         return itsDate;
     }
 

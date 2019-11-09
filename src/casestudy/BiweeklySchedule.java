@@ -1,30 +1,26 @@
 package casestudy;
 
-import java.util.Calendar;
-import java.util.GregorianCalendar;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
 
 public class BiweeklySchedule implements PaymentSchedule {
-    private final Calendar FIRST_PAYABLE_FRIDAY = new GregorianCalendar(2001, Calendar.NOVEMBER, 9);
+    private final LocalDate FIRST_PAYABLE_FRIDAY = LocalDate.of(2001, 11, 9);
 
 
     @Override
-    public Calendar getPayPeriodStartDate(Calendar payDate) {
-        Calendar payPeriodStartDate = Calendar.getInstance();
-        payPeriodStartDate.setTime(payDate.getTime());
-        payPeriodStartDate.add(Calendar.DATE, -13);
-        return payPeriodStartDate;
+    public LocalDate getPayPeriodStartDate(LocalDate payDate) {
+        return payDate.minusDays(13);
     }
 
     @Override
-    public boolean isPayDate(Calendar payDate) {
-        Calendar cal = Calendar.getInstance();
-        if ((payDate.get(Calendar.DAY_OF_WEEK) == Calendar.FRIDAY)) {
-            cal.setTime(FIRST_PAYABLE_FRIDAY.getTime());
-            while (cal.compareTo(payDate) <= 0) {
-                if (cal.equals(payDate)) {
+    public boolean isPayDate(LocalDate payDate) {
+        LocalDate date = FIRST_PAYABLE_FRIDAY;
+        if (payDate.getDayOfWeek().equals(DayOfWeek.FRIDAY)) {
+            while (!date.isAfter(payDate)) {
+                if (date.isEqual(payDate)) {
                     return true;
                 }
-                cal.add(Calendar.DATE, 14);
+                date = date.plusWeeks(2);
             }
         }
         return false;

@@ -1,13 +1,13 @@
 package casestudy;
 
-import java.util.Calendar;
+import java.time.LocalDate;
 
 public class SalesReceiptTransaction implements Transaction {
-    private Calendar itsDate;
+    private LocalDate itsDate;
     private double itsAmount;
     private int itsEmpId;
 
-    public SalesReceiptTransaction(Calendar date, double amount, int empId) {
+    public SalesReceiptTransaction(LocalDate date, double amount, int empId) {
         itsDate = date;
         itsAmount = amount;
         itsEmpId = empId;

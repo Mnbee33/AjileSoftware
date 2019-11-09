@@ -3,8 +3,7 @@ package casestudy;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.Calendar;
-import java.util.GregorianCalendar;
+import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -109,8 +108,8 @@ public class TestPayroll {
         AddHourlyEmployee t = new AddHourlyEmployee(empId, "Bill", "Home", 15.25);
         t.execute();
 
-        Calendar payDate = new GregorianCalendar(2001, Calendar.NOVEMBER, 31);
-        TimeCardTransaction tct = new TimeCardTransaction(payDate, 8.0, empId);
+        LocalDate date = LocalDate.of(2001, 10, 31);
+        TimeCardTransaction tct = new TimeCardTransaction(date, 8.0, empId);
         tct.execute();
 
         Employee e = PayrollDatabase.getEmployee(empId);
@@ -120,7 +119,7 @@ public class TestPayroll {
         HourlyClassification hc = (HourlyClassification) pc;
         assertNotNull(hc);
 
-        TimeCard tc = hc.getTimeCard(payDate);
+        TimeCard tc = hc.getTimeCard(date);
         assertNotNull(tc);
         assertEquals(8.0, tc.getHours());
     }
@@ -131,7 +130,7 @@ public class TestPayroll {
         AddCommissionedEmployee t = new AddCommissionedEmployee(empId, "Bill", "Home", 1000.00, 15.25);
         t.execute();
 
-        Calendar date = new GregorianCalendar(2001, Calendar.NOVEMBER, 31);
+        LocalDate date = LocalDate.of(2001, 10, 31);
         SalesReceiptTransaction srt = new SalesReceiptTransaction(date, 8.0, empId);
         srt.execute();
 
@@ -153,7 +152,7 @@ public class TestPayroll {
         AddHourlyEmployee t = new AddHourlyEmployee(empId, "Bill", "Home", 15.25);
         t.execute();
 
-        Calendar payDate = new GregorianCalendar(2001, Calendar.NOVEMBER, 31);
+        LocalDate payDate = LocalDate.of(2001, 10, 31);
         TimeCardTransaction tct = new TimeCardTransaction(payDate, 8.0, empId);
         tct.execute();
 
@@ -387,7 +386,7 @@ public class TestPayroll {
         AddSalariedEmployee t = new AddSalariedEmployee(empId, "Bob", "Home", 1000.0);
         t.execute();
 
-        Calendar payDate = new GregorianCalendar(2001, Calendar.NOVEMBER, 30);
+        LocalDate payDate = LocalDate.of(2001, 11, 30);
         PaydayTransaction pt = new PaydayTransaction(payDate);
         pt.execute();
 
@@ -400,7 +399,7 @@ public class TestPayroll {
         AddSalariedEmployee t = new AddSalariedEmployee(empId, "Bob", "Home", 1000.0);
         t.execute();
 
-        Calendar payDate = new GregorianCalendar(2001, Calendar.NOVEMBER, 29);
+        LocalDate payDate = LocalDate.of(2001, 11, 29);
         PaydayTransaction pt = new PaydayTransaction(payDate);
         pt.execute();
 
@@ -414,7 +413,7 @@ public class TestPayroll {
         AddHourlyEmployee t = new AddHourlyEmployee(empId, "Bill", "Home", 15.25);
         t.execute();
 
-        Calendar payDate = new GregorianCalendar(2001, Calendar.NOVEMBER, 9);
+        LocalDate payDate = LocalDate.of(2001, 11, 9);
         PaydayTransaction pt = new PaydayTransaction(payDate);
         pt.execute();
 
@@ -427,7 +426,7 @@ public class TestPayroll {
         AddHourlyEmployee t = new AddHourlyEmployee(empId, "Bill", "Home", 15.25);
         t.execute();
 
-        Calendar payDate = new GregorianCalendar(2001, Calendar.NOVEMBER, 9);
+        LocalDate payDate = LocalDate.of(2001, 11, 9);
         TimeCardTransaction tc = new TimeCardTransaction(payDate, 2.0, empId);
         tc.execute();
 
@@ -443,7 +442,7 @@ public class TestPayroll {
         AddHourlyEmployee t = new AddHourlyEmployee(empId, "Bill", "Home", 15.25);
         t.execute();
 
-        Calendar payDate = new GregorianCalendar(2001, Calendar.NOVEMBER, 9);
+        LocalDate payDate = LocalDate.of(2001, 11, 9);
         TimeCardTransaction tc = new TimeCardTransaction(payDate, 9.0, empId);
         tc.execute();
 
@@ -459,7 +458,7 @@ public class TestPayroll {
         AddHourlyEmployee t = new AddHourlyEmployee(empId, "Bill", "Home", 15.25);
         t.execute();
 
-        Calendar payDate = new GregorianCalendar(2001, Calendar.NOVEMBER, 8);
+        LocalDate payDate = LocalDate.of(2001, 11, 8);
         TimeCardTransaction tc = new TimeCardTransaction(payDate, 9.0, empId);
         tc.execute();
 
@@ -476,11 +475,11 @@ public class TestPayroll {
         AddHourlyEmployee t = new AddHourlyEmployee(empId, "Bill", "Home", 15.25);
         t.execute();
 
-        Calendar payDate = new GregorianCalendar(2001, Calendar.NOVEMBER, 9);
+        LocalDate payDate = LocalDate.of(2001, 11, 9);
         TimeCardTransaction tc = new TimeCardTransaction(payDate, 2.0, empId);
         tc.execute();
 
-        Calendar payDate2 = new GregorianCalendar(2001, Calendar.NOVEMBER, 8);
+        LocalDate payDate2 = LocalDate.of(2001, 11, 8);
         TimeCardTransaction tc2 = new TimeCardTransaction(payDate2, 5.0, empId);
         tc2.execute();
 
@@ -496,8 +495,8 @@ public class TestPayroll {
         AddHourlyEmployee t = new AddHourlyEmployee(empId, "Bill", "Home", 15.25);
         t.execute();
 
-        Calendar payDate = new GregorianCalendar(2001, Calendar.NOVEMBER, 9);
-        Calendar dateInPreviousPayPeriod = new GregorianCalendar(2001, Calendar.NOVEMBER, 2);
+        LocalDate payDate = LocalDate.of(2001, 11, 9);
+        LocalDate dateInPreviousPayPeriod = LocalDate.of(2001, 11, 2);
 
         TimeCardTransaction tc = new TimeCardTransaction(payDate, 2.0, empId);
         tc.execute();
@@ -517,7 +516,7 @@ public class TestPayroll {
         AddCommissionedEmployee t = new AddCommissionedEmployee(empId, "Lance", "Home", 2500, 3.2);
         t.execute();
 
-        Calendar payDate = new GregorianCalendar(2001, Calendar.NOVEMBER, 9);
+        LocalDate payDate = LocalDate.of(2001, 11, 9);
 
         PaydayTransaction pt = new PaydayTransaction(payDate);
         pt.execute();
@@ -531,7 +530,7 @@ public class TestPayroll {
         AddCommissionedEmployee t = new AddCommissionedEmployee(empId, "Lance", "Home", 2500, 3.2);
         t.execute();
 
-        Calendar payDate = new GregorianCalendar(2001, Calendar.NOVEMBER, 9);
+        LocalDate payDate = LocalDate.of(2001, 11, 9);
 
         SalesReceiptTransaction srt = new SalesReceiptTransaction(payDate, 8.0, empId);
         srt.execute();
@@ -548,12 +547,12 @@ public class TestPayroll {
         AddCommissionedEmployee t = new AddCommissionedEmployee(empId, "Lance", "Home", 2500, 3.2);
         t.execute();
 
-        Calendar payDate = new GregorianCalendar(2001, Calendar.NOVEMBER, 9);
+        LocalDate payDate = LocalDate.of(2001, 11, 9);
         SalesReceiptTransaction srt = new SalesReceiptTransaction(payDate, 8.0, empId);
         srt.execute();
 
         SalesReceiptTransaction srt2 = new SalesReceiptTransaction(
-                new GregorianCalendar(2001, Calendar.NOVEMBER, 8), 7.0, empId);
+                LocalDate.of(2001, 11, 8), 7.0, empId);
         srt2.execute();
 
         PaydayTransaction pt = new PaydayTransaction(payDate);
@@ -568,7 +567,7 @@ public class TestPayroll {
         AddCommissionedEmployee t = new AddCommissionedEmployee(empId, "Lance", "Home", 2500, 3.2);
         t.execute();
 
-        Calendar payDate = new GregorianCalendar(2001, Calendar.NOVEMBER, 16);
+        LocalDate payDate = LocalDate.of(2001, 11, 16);
         SalesReceiptTransaction srt = new SalesReceiptTransaction(payDate, 8.0, empId);
         srt.execute();
 
@@ -585,16 +584,16 @@ public class TestPayroll {
         AddCommissionedEmployee t = new AddCommissionedEmployee(empId, "Lance", "Home", 2500, 3.2);
         t.execute();
 
-        Calendar payDate = new GregorianCalendar(2001, Calendar.NOVEMBER, 9);
+        LocalDate payDate = LocalDate.of(2001, 11, 9);
         SalesReceiptTransaction srt = new SalesReceiptTransaction(payDate, 8.0, empId);
         srt.execute();
 
         SalesReceiptTransaction srt2 = new SalesReceiptTransaction(
-                new GregorianCalendar(2001, Calendar.OCTOBER, 26), 7.0, empId);
+                LocalDate.of(2001, 10, 26), 7.0, empId);
         srt2.execute();
 
         SalesReceiptTransaction srt3 = new SalesReceiptTransaction(
-                new GregorianCalendar(2001, Calendar.NOVEMBER, 10), 6.0, empId);
+                LocalDate.of(2001, 12, 10), 6.0, empId);
         srt3.execute();
 
         PaydayTransaction pt = new PaydayTransaction(payDate);
@@ -613,8 +612,8 @@ public class TestPayroll {
         ChangeMemberTransaction cmt = new ChangeMemberTransaction(empId, memberId, 9.42);
         cmt.execute();
 
-        Calendar payDate = new GregorianCalendar(2001, Calendar.NOVEMBER, 30);
-        int fridays = 5;    // 2011年11月に金曜日は5日あった
+        LocalDate payDate = LocalDate.of(2001, 11, 30);
+        int fridays = 5;    // 2001年11月に金曜日は5日あった
         PaydayTransaction pt = new PaydayTransaction(payDate);
         pt.execute();
 
@@ -637,7 +636,7 @@ public class TestPayroll {
         ChangeMemberTransaction cmt = new ChangeMemberTransaction(empId, memberId, 9.42);
         cmt.execute();
 
-        Calendar payDate = new GregorianCalendar(2001, Calendar.NOVEMBER, 9);
+        LocalDate payDate = LocalDate.of(2001, 11, 9);
         ServiceChargeTransaction sct = new ServiceChargeTransaction(memberId, payDate, 19.42);
         sct.execute();
 
@@ -666,9 +665,9 @@ public class TestPayroll {
         ChangeMemberTransaction cmt = new ChangeMemberTransaction(empId, memberId, 9.42);
         cmt.execute();
 
-        Calendar earlyDate = new GregorianCalendar(2001, Calendar.NOVEMBER, 9); // 前の金曜日
-        Calendar payDate = new GregorianCalendar(2001, Calendar.NOVEMBER, 16);
-        Calendar lateDate = new GregorianCalendar(2001, Calendar.DECEMBER, 16);  // 次の金曜日
+        LocalDate earlyDate = LocalDate.of(2001, 11, 2); // 前の金曜日
+        LocalDate payDate = LocalDate.of(2001, 11, 9);
+        LocalDate lateDate = LocalDate.of(2001, 11, 16);  // 次の金曜日
 
         ServiceChargeTransaction sct = new ServiceChargeTransaction(memberId, payDate, 19.42);
         sct.execute();
@@ -694,7 +693,7 @@ public class TestPayroll {
         assertEquals(8 * 15.24 - (9.42 + 19.42), pc.getNetPay());
     }
 
-    private void validatePayCheck(PaydayTransaction pt, int empId, Calendar payDate, double pay) {
+    private void validatePayCheck(PaydayTransaction pt, int empId, LocalDate payDate, double pay) {
         PayCheck pc = pt.getPayCheck(empId);
         assertNotNull(pc);
 

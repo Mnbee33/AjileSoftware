@@ -1,6 +1,6 @@
 package casestudy;
 
-import java.util.Calendar;
+import java.time.LocalDate;
 
 public class Employee {
     private int itsEmpId;
@@ -68,11 +68,11 @@ public class Employee {
         itsAddress = address;
     }
 
-    public boolean isPayDate(Calendar payDate) {
+    public boolean isPayDate(LocalDate payDate) {
         return itsSchedule.isPayDate(payDate);
     }
 
-    public Calendar getPayPeriodStartDate(Calendar payDate) {
+    public LocalDate getPayPeriodStartDate(LocalDate payDate) {
         return itsSchedule.getPayPeriodStartDate(payDate);
     }
 

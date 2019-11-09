@@ -1,13 +1,13 @@
 package casestudy;
 
-import java.util.Calendar;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
 public class CommissionedClassification implements PaymentClassification {
     private double itsSalary;
     private double itsCommissionRate;
-    private Map<Calendar, SaleReceipt> itsSaleReceipts = new HashMap<>();
+    private Map<LocalDate, SaleReceipt> itsSaleReceipts = new HashMap<>();
 
     public CommissionedClassification(double salary, double commissionRate) {
         itsSalary = salary;
@@ -22,7 +22,7 @@ public class CommissionedClassification implements PaymentClassification {
         return itsCommissionRate;
     }
 
-    public SaleReceipt getSaleReceipt(Calendar date) {
+    public SaleReceipt getSaleReceipt(LocalDate date) {
         return itsSaleReceipts.get(date);
     }
 
@@ -34,7 +34,7 @@ public class CommissionedClassification implements PaymentClassification {
     public double calculatePay(PayCheck pc) {
         double totalPay = itsSalary;
         for (SaleReceipt receipt : itsSaleReceipts.values()) {
-            if (isInPayPeriod(receipt.getDate(), pc)) {
+            if (Date.isBetween(receipt.getDate(), pc.getPayPeriodStartDate(), pc.getPayPeriodEndDate())) {
                 totalPay += receipt.getAmount() * itsCommissionRate;
             }
         }

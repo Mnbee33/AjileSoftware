@@ -1,18 +1,16 @@
 package casestudy;
 
-import java.util.Calendar;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
 
 public class WeeklySchedule implements PaymentSchedule {
     @Override
-    public Calendar getPayPeriodStartDate(Calendar payDate) {
-        Calendar payPeriodStartDate = Calendar.getInstance();
-        payPeriodStartDate.setTime(payDate.getTime());
-        payPeriodStartDate.add(Calendar.DATE, -6);
-        return payPeriodStartDate;
+    public LocalDate getPayPeriodStartDate(LocalDate payDate) {
+        return payDate.minusDays(6);
     }
 
     @Override
-    public boolean isPayDate(Calendar payDate) {
-        return payDate.get(Calendar.DAY_OF_WEEK) == Calendar.FRIDAY;
+    public boolean isPayDate(LocalDate payDate) {
+        return payDate.getDayOfWeek().equals(DayOfWeek.FRIDAY);
     }
 }

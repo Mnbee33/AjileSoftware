@@ -1,10 +1,9 @@
 package casestudy;
 
-import java.util.Calendar;
-import java.util.GregorianCalendar;
+import java.time.LocalDate;
 
-public class Date extends GregorianCalendar {
-    public static boolean isBetween(Calendar theDate, Calendar startDate, Calendar endDate) {
-        return (theDate.compareTo(startDate) >= 0) && (theDate.compareTo(endDate) <= 0);
+public class Date {
+    public static boolean isBetween(LocalDate theDate, LocalDate startDate, LocalDate endDate) {
+        return (!theDate.isBefore(startDate)) && (!theDate.isAfter(endDate));
     }
 }

@@ -1,10 +1,10 @@
 package casestudy;
 
-import java.util.Calendar;
+import java.time.LocalDate;
 
 public class NoAffiliation implements Affiliation {
     @Override
-    public double getServiceCharge(Calendar date) {
+    public double getServiceCharge(LocalDate date) {
         return 0;
     }
 
