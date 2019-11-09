@@ -157,4 +157,20 @@ public class TestTextParserTransactionSource {
         application.setSource(payDay);
         application.execute();
     }
+
+    @Test
+    void testMultipleCommand() {
+        TransactionSource multi = new TextParserTransactionSource("test/casestudy/src/Multi.txt");
+        application.setSource(multi);
+        application.execute();
+
+        Employee e = PayrollDatabase.getEmployee(1);
+        HourlyClassification hc = (HourlyClassification) e.getClassification();
+        assertEquals(15.24, hc.getRate());
+
+        TimeCard tc = hc.getTimeCard(LocalDate.of(2001, 10, 31));
+        assertEquals(8.0, tc.getHours());
+
+        assertNotNull(PayrollDatabase.getUnionMember(86));
+    }
 }
