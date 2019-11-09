@@ -40,6 +40,12 @@ public class TextParserTransactionSource implements TransactionSource {
                 return delEmp(commands);
             case "TimeCard":
                 return timeCard(commands);
+            case "SalesReceipt":
+                return salesReceipt(commands);
+            case "ServiceCharge":
+                return serviceCharge(commands);
+            case "ChgEmp":
+                return chgEmp(commands);
             default:
                 return null;
         }
@@ -75,5 +81,59 @@ public class TextParserTransactionSource implements TransactionSource {
         LocalDate date = LocalDate.parse(commands[2]);
         double hour = Double.parseDouble(commands[3]);
         return new TimeCardTransaction(date, hour, empId);
+    }
+
+    private Transaction salesReceipt(String[] commands) {
+        int empId = Integer.parseInt(commands[1]);
+        LocalDate date = LocalDate.parse(commands[2]);
+        double amount = Double.parseDouble(commands[3]);
+        return new SalesReceiptTransaction(date, amount, empId);
+    }
+
+    private Transaction serviceCharge(String[] commands) {
+        int memberId = Integer.parseInt(commands[1]);
+        LocalDate date = LocalDate.parse(commands[2]);
+        double amount = Double.parseDouble(commands[3]);
+        return new ServiceChargeTransaction(memberId, date, amount);
+    }
+
+    private Transaction chgEmp(String[] commands) {
+        int empId = Integer.parseInt(commands[1]);
+        String type = commands[2];
+        switch (type) {
+            case "Name":
+                String name = commands[3];
+                return new ChangeNameTransaction(empId, name);
+            case "Address":
+                String address = commands[3];
+                return new ChangeAddressTransaction(empId, address);
+            case "Hourly":
+                double hourlyRate = Double.parseDouble(commands[3]);
+                return new ChangeHourlyTransaction(empId, hourlyRate);
+            case "Salaried":
+                double salary = Double.parseDouble(commands[3]);
+                return new ChangeSalariedTransaction(empId, salary);
+            case "Commissioned":
+                double commissionedSalary = Double.parseDouble(commands[3]);
+                double commissionedRate = Double.parseDouble(commands[4]);
+                return new ChangeCommissionedTransaction(empId, commissionedSalary, commissionedRate);
+            case "Hold":
+                return new ChangeHoldTransaction(empId);
+            case "Direct":
+                String bank = commands[3];
+                long account = Long.parseLong(commands[4]);
+                return new ChangeDirectTransaction(empId, bank, account);
+            case "Mail":
+                String mailAddress = commands[3];
+                return new ChangeMailTransaction(empId, mailAddress);
+            case "Member":
+                int memberId = Integer.parseInt(commands[3]);
+                double dues = Double.parseDouble(commands[5]);
+                return new ChangeMemberTransaction(empId, memberId, dues);
+            case "NoMember":
+                return new ChangeUnaffiliatedTransaction(empId);
+            default:
+                return null;
+        }
     }
 }

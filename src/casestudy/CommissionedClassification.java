@@ -7,7 +7,7 @@ import java.util.Map;
 public class CommissionedClassification implements PaymentClassification {
     private double itsSalary;
     private double itsCommissionRate;
-    private Map<LocalDate, SaleReceipt> itsSaleReceipts = new HashMap<>();
+    private Map<LocalDate, SalesReceipt> itsSalesReceipts = new HashMap<>();
 
     public CommissionedClassification(double salary, double commissionRate) {
         itsSalary = salary;
@@ -22,18 +22,18 @@ public class CommissionedClassification implements PaymentClassification {
         return itsCommissionRate;
     }
 
-    public SaleReceipt getSaleReceipt(LocalDate date) {
-        return itsSaleReceipts.get(date);
+    public SalesReceipt getSalesReceipt(LocalDate date) {
+        return itsSalesReceipts.get(date);
     }
 
-    public void addSaleReceipt(SaleReceipt saleReceipt) {
-        itsSaleReceipts.put(saleReceipt.getDate(), saleReceipt);
+    public void addSaleReceipt(SalesReceipt salesReceipt) {
+        itsSalesReceipts.put(salesReceipt.getDate(), salesReceipt);
     }
 
     @Override
     public double calculatePay(PayCheck pc) {
         double totalPay = itsSalary;
-        for (SaleReceipt receipt : itsSaleReceipts.values()) {
+        for (SalesReceipt receipt : itsSalesReceipts.values()) {
             if (Date.isBetween(receipt.getDate(), pc.getPayPeriodStartDate(), pc.getPayPeriodEndDate())) {
                 totalPay += receipt.getAmount() * itsCommissionRate;
             }

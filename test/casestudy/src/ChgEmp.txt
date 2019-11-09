@@ -1,0 +1,11 @@
+ChgEmp 1 Name Robert
+ChgEmp 1 Address nextHome
+ChgEmp 2 Hourly 12.25
+ChgEmp 3 Salaried 2000.00
+ChgEmp 1 Commissioned 2200.00 7.5
+ChgEmp 1 Hold
+ChgEmp 2 Direct bank1 6
+ChgEmp 3 Mail alice@mail.com
+ChgEmp 1 Member 86 Due 9.0
+ChgEmp 2 Member 87 Due 9.0
+ChgEmp 2 NoMember

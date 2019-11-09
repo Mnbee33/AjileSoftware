@@ -20,7 +20,7 @@ public class SalesReceiptTransaction implements Transaction {
             PaymentClassification pc = e.getClassification();
             if (pc instanceof CommissionedClassification) {
                 CommissionedClassification cc = (CommissionedClassification) pc;
-                cc.addSaleReceipt(new SaleReceipt(itsDate, itsAmount));
+                cc.addSaleReceipt(new SalesReceipt(itsDate, itsAmount));
             } else {
                 throw new RuntimeException("Tried to add salereceipt to non-commissioned employee.");
             }

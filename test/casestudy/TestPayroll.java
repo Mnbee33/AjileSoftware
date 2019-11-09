@@ -141,7 +141,7 @@ public class TestPayroll {
         CommissionedClassification cc = (CommissionedClassification) pc;
         assertNotNull(cc);
 
-        SaleReceipt sr = cc.getSaleReceipt(date);
+        SalesReceipt sr = cc.getSalesReceipt(date);
         assertNotNull(sr);
         assertEquals(8.0, sr.getAmount());
     }
