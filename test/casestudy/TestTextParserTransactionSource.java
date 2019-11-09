@@ -4,10 +4,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class TestMain {
+public class TestTextParserTransactionSource {
     private PayrollApplication application;
 
     @BeforeEach
@@ -17,7 +18,7 @@ public class TestMain {
     }
 
     @Test
-    void testTextParserTransactionSource_AddEmp() {
+    void testAddEmp() {
         TransactionSource addEmp = new TextParserTransactionSource("test/casestudy/src/AddEmp.txt");
         application.setSource(addEmp);
         application.execute();
@@ -39,7 +40,7 @@ public class TestMain {
     }
 
     @Test
-    void testTextParserTransactionSource_DelEmp() {
+    void testDelEmp() {
         TransactionSource addEmp = new TextParserTransactionSource("test/casestudy/src/AddEmp.txt");
         application.setSource(addEmp);
         application.execute();
@@ -54,7 +55,7 @@ public class TestMain {
     }
 
     @Test
-    void testTextParserTransactionSource_TimeCard() {
+    void testTimeCard() {
         TransactionSource addEmp = new TextParserTransactionSource("test/casestudy/src/AddEmp.txt");
         application.setSource(addEmp);
         application.execute();
@@ -72,7 +73,7 @@ public class TestMain {
     }
 
     @Test
-    void testTextParserTransactionSource_SalesReceipt() {
+    void testSalesReceipt() {
         TransactionSource addEmp = new TextParserTransactionSource("test/casestudy/src/AddEmp.txt");
         application.setSource(addEmp);
         application.execute();
@@ -90,7 +91,7 @@ public class TestMain {
     }
 
     @Test
-    void testTextParserTransactionSource_ServiceCharge() {
+    void testServiceCharge() {
         TransactionSource addEmp = new TextParserTransactionSource("test/casestudy/src/AddEmp.txt");
         application.setSource(addEmp);
         application.execute();
@@ -112,7 +113,7 @@ public class TestMain {
     }
 
     @Test
-    void testTextParserTransactionSource_ChgEmp() {
+    void testChgEmp() {
         TransactionSource addEmp = new TextParserTransactionSource("test/casestudy/src/AddEmp.txt");
         application.setSource(addEmp);
         application.execute();
@@ -140,5 +141,20 @@ public class TestMain {
         SalariedClassification sc = (SalariedClassification) e3.getClassification();
         assertEquals(2000.00, sc.getSalary());
         assertTrue(e3.getMethod() instanceof MailMethod);
+    }
+
+    @Test
+    void testPayday() {
+        TransactionSource addEmp = new TextParserTransactionSource("test/casestudy/src/AddEmp.txt");
+        application.setSource(addEmp);
+        application.execute();
+
+        TransactionSource payDay = new TextParserTransactionSource("test/casestudy/src/Payday.txt");
+        List<Transaction> transactions = payDay.getTransactions();
+        assertEquals(1, transactions.size());
+        assertTrue(transactions.get(0) instanceof PaydayTransaction);
+
+        application.setSource(payDay);
+        application.execute();
     }
 }

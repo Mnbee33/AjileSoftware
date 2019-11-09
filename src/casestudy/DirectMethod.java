@@ -19,6 +19,6 @@ public class DirectMethod implements PaymentMethod {
 
     @Override
     public void pay(PayCheck pc) {
-
+        System.out.println("Direct Method");
     }
 }

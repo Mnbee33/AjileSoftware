@@ -46,6 +46,8 @@ public class TextParserTransactionSource implements TransactionSource {
                 return serviceCharge(commands);
             case "ChgEmp":
                 return chgEmp(commands);
+            case "Payday":
+                return payDay(commands);
             default:
                 return null;
         }
@@ -135,5 +137,10 @@ public class TextParserTransactionSource implements TransactionSource {
             default:
                 return null;
         }
+    }
+
+    private Transaction payDay(String[] commands) {
+        LocalDate payDate = LocalDate.parse(commands[1]);
+        return new PaydayTransaction(payDate);
     }
 }

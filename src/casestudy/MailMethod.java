@@ -13,6 +13,6 @@ public class MailMethod implements PaymentMethod {
 
     @Override
     public void pay(PayCheck pc) {
-
+        System.out.println("Mail Method");
     }
 }
