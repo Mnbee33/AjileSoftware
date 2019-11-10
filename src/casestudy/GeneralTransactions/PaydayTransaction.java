@@ -1,7 +1,9 @@
-package casestudy.Payment;
+package casestudy.GeneralTransactions;
 
-import casestudy.PayrollDatabase.PayrollDatabase;
+import casestudy.Affiliations.PaycheckImplementation;
+import casestudy.PayrollDatabase.GlobalDatabase;
 import casestudy.PayrollDomain.Employee;
+import casestudy.PayrollDomain.PayCheck;
 import casestudy.TransactionApplication.Transaction;
 
 import java.time.LocalDate;
@@ -18,11 +20,11 @@ public class PaydayTransaction implements Transaction {
     }
 
     public void execute() {
-        List<Integer> empIds = PayrollDatabase.getAllEmployeeIds();
+        List<Integer> empIds = GlobalDatabase.database.getAllEmployeeIds();
         for (int empId : empIds) {
-            Employee e = PayrollDatabase.getEmployee(empId);
+            Employee e = GlobalDatabase.database.getEmployee(empId);
             if (e.isPayDate(itsPayDate)) {
-                PayCheck pc = new PayCheck(e.getPayPeriodStartDate(itsPayDate), itsPayDate);
+                PayCheck pc = new PaycheckImplementation(e.getPayPeriodStartDate(itsPayDate), itsPayDate);
                 itsPayChecks.put(empId, pc);
                 e.payday(pc);
             }
