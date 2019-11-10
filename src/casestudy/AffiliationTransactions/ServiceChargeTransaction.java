@@ -1,6 +1,7 @@
-package casestudy.Affiliations;
+package casestudy.AffiliationTransactions;
 
-import casestudy.PayrollDatabase.PayrollDatabase;
+import casestudy.Affiliations.UnionAffiliation;
+import casestudy.PayrollDatabase.GlobalDatabase;
 import casestudy.PayrollDomain.Affiliation;
 import casestudy.PayrollDomain.Employee;
 import casestudy.TransactionApplication.Transaction;
@@ -20,7 +21,7 @@ public class ServiceChargeTransaction implements Transaction {
 
     @Override
     public void execute() {
-        Employee e = PayrollDatabase.getUnionMember(itsMemberId);
+        Employee e = GlobalDatabase.database.getUnionMember(itsMemberId);
         Affiliation af = e.getAffiliation();
         if (af instanceof UnionAffiliation) {
             UnionAffiliation uaf = (UnionAffiliation) af;

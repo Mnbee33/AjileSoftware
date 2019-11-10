@@ -1,7 +1,7 @@
 package casestudy.ClassificationTransactions;
 
 import casestudy.Classifications.CommissionedClassification;
-import casestudy.PayrollDatabase.PayrollDatabase;
+import casestudy.PayrollDatabase.GlobalDatabase;
 import casestudy.PayrollDomain.Employee;
 import casestudy.PayrollDomain.PaymentClassification;
 import casestudy.TransactionApplication.Transaction;
@@ -21,7 +21,7 @@ public class SalesReceiptTransaction implements Transaction {
 
     @Override
     public void execute() {
-        Employee e = PayrollDatabase.getEmployee(itsEmpId);
+        Employee e = GlobalDatabase.database.getEmployee(itsEmpId);
         if (e != null) {
             PaymentClassification pc = e.getClassification();
             if (pc instanceof CommissionedClassification) {

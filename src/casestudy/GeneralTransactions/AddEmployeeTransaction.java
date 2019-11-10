@@ -1,7 +1,7 @@
 package casestudy.GeneralTransactions;
 
 import casestudy.Methods.HoldMethod;
-import casestudy.PayrollDatabase.PayrollDatabase;
+import casestudy.PayrollDatabase.GlobalDatabase;
 import casestudy.PayrollDomain.Employee;
 import casestudy.PayrollDomain.PaymentClassification;
 import casestudy.PayrollDomain.PaymentMethod;
@@ -29,7 +29,7 @@ public abstract class AddEmployeeTransaction implements Transaction {
         e.setSchedule(ps);
         e.setMethod(pm);
 
-        PayrollDatabase.addEmployee(itsEmpId, e);
+        GlobalDatabase.database.addEmployee(itsEmpId, e);
     }
 
     protected abstract PaymentClassification getClassification();

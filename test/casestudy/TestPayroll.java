@@ -1,20 +1,20 @@
 package casestudy;
 
-import casestudy.Affiliations.*;
+import casestudy.AffiliationTransactions.ChangeMemberTransaction;
+import casestudy.AffiliationTransactions.ChangeUnaffiliatedTransaction;
+import casestudy.AffiliationTransactions.ServiceChargeTransaction;
+import casestudy.Affiliations.UnionAffiliation;
 import casestudy.ClassificationTransactions.*;
 import casestudy.Classifications.*;
-import casestudy.EmployeeAttributeTransactions.ChangeAddressTransaction;
-import casestudy.EmployeeAttributeTransactions.ChangeNameTransaction;
-import casestudy.GeneralTransactions.DeleteEmployeeTransaction;
+import casestudy.GeneralTransactions.*;
 import casestudy.MethodTransactions.ChangeDirectTransaction;
 import casestudy.MethodTransactions.ChangeHoldTransaction;
 import casestudy.MethodTransactions.ChangeMailTransaction;
 import casestudy.Methods.DirectMethod;
 import casestudy.Methods.HoldMethod;
 import casestudy.Methods.MailMethod;
-import casestudy.Payment.PayCheck;
-import casestudy.Payment.PaydayTransaction;
-import casestudy.PayrollDatabase.PayrollDatabase;
+import casestudy.PayrollDatabase.GlobalDatabase;
+import casestudy.PayrollDatabaseImplementation.PayrollDatabaseImplementation;
 import casestudy.PayrollDomain.*;
 import casestudy.Schedules.BiweeklySchedule;
 import casestudy.Schedules.MonthlySchedule;
@@ -29,7 +29,8 @@ import static org.junit.jupiter.api.Assertions.*;
 public class TestPayroll {
     @BeforeEach
     void setUp() {
-        PayrollDatabase.clear();
+        GlobalDatabase.database = new PayrollDatabaseImplementation();
+        GlobalDatabase.database.clear();
     }
 
     @Test
@@ -38,7 +39,7 @@ public class TestPayroll {
         AddSalariedEmployee t = new AddSalariedEmployee(empId, "Bob", "Home", 1000.00);
         t.execute();
 
-        Employee e = PayrollDatabase.getEmployee(empId);
+        Employee e = GlobalDatabase.database.getEmployee(empId);
         assertNotNull(e);
         assertEquals("Bob", e.getName());
 
@@ -62,7 +63,7 @@ public class TestPayroll {
         AddHourlyEmployee t = new AddHourlyEmployee(empId, "Bob", "Home", 1000.00);
         t.execute();
 
-        Employee e = PayrollDatabase.getEmployee(empId);
+        Employee e = GlobalDatabase.database.getEmployee(empId);
         assertNotNull(e);
         assertEquals("Bob", e.getName());
 
@@ -86,7 +87,7 @@ public class TestPayroll {
         AddCommissionedEmployee t = new AddCommissionedEmployee(empId, "Bob", "Home", 1000.00, 50.0);
         t.execute();
 
-        Employee e = PayrollDatabase.getEmployee(empId);
+        Employee e = GlobalDatabase.database.getEmployee(empId);
         assertNotNull(e);
         assertEquals("Bob", e.getName());
 
@@ -111,13 +112,13 @@ public class TestPayroll {
         AddCommissionedEmployee t = new AddCommissionedEmployee(empId, "Lance", "Home", 2500, 3.2);
         t.execute();
 
-        Employee e = PayrollDatabase.getEmployee(empId);
+        Employee e = GlobalDatabase.database.getEmployee(empId);
         assertNotNull(e);
 
         DeleteEmployeeTransaction dt = new DeleteEmployeeTransaction(empId);
         dt.execute();
 
-        e = PayrollDatabase.getEmployee(empId);
+        e = GlobalDatabase.database.getEmployee(empId);
         assertNull(e);
     }
 
@@ -131,7 +132,7 @@ public class TestPayroll {
         TimeCardTransaction tct = new TimeCardTransaction(date, 8.0, empId);
         tct.execute();
 
-        Employee e = PayrollDatabase.getEmployee(empId);
+        Employee e = GlobalDatabase.database.getEmployee(empId);
         assertNotNull(e);
 
         PaymentClassification pc = e.getClassification();
@@ -153,7 +154,7 @@ public class TestPayroll {
         SalesReceiptTransaction srt = new SalesReceiptTransaction(date, 8.0, empId);
         srt.execute();
 
-        Employee e = PayrollDatabase.getEmployee(empId);
+        Employee e = GlobalDatabase.database.getEmployee(empId);
         assertNotNull(e);
 
         PaymentClassification pc = e.getClassification();
@@ -175,14 +176,14 @@ public class TestPayroll {
         TimeCardTransaction tct = new TimeCardTransaction(payDate, 8.0, empId);
         tct.execute();
 
-        Employee e = PayrollDatabase.getEmployee(empId);
+        Employee e = GlobalDatabase.database.getEmployee(empId);
         assertNotNull(e);
 
         int memberId = 86;
         Affiliation af = new UnionAffiliation(memberId, 8.5);
         e.setAffiliation(af);
 
-        PayrollDatabase.addUnionMember(memberId, e);
+        GlobalDatabase.database.addUnionMember(memberId, e);
 
         ServiceChargeTransaction sct = new ServiceChargeTransaction(memberId, payDate, 12.95);
         sct.execute();
@@ -200,7 +201,7 @@ public class TestPayroll {
         ChangeNameTransaction cnt = new ChangeNameTransaction(empId, "Bob");
         cnt.execute();
 
-        Employee e = PayrollDatabase.getEmployee(empId);
+        Employee e = GlobalDatabase.database.getEmployee(empId);
         assertNotNull(e);
         assertEquals("Bob", e.getName());
     }
@@ -214,7 +215,7 @@ public class TestPayroll {
         ChangeAddressTransaction cnt = new ChangeAddressTransaction(empId, "City");
         cnt.execute();
 
-        Employee e = PayrollDatabase.getEmployee(empId);
+        Employee e = GlobalDatabase.database.getEmployee(empId);
         assertNotNull(e);
         assertEquals("City", e.getAddress());
     }
@@ -228,7 +229,7 @@ public class TestPayroll {
         ChangeHourlyTransaction cht = new ChangeHourlyTransaction(empId, 27.52);
         cht.execute();
 
-        Employee e = PayrollDatabase.getEmployee(empId);
+        Employee e = GlobalDatabase.database.getEmployee(empId);
         assertNotNull(e);
 
         PaymentClassification pc = e.getClassification();
@@ -250,7 +251,7 @@ public class TestPayroll {
         ChangeSalariedTransaction cst = new ChangeSalariedTransaction(empId, 1000);
         cst.execute();
 
-        Employee e = PayrollDatabase.getEmployee(empId);
+        Employee e = GlobalDatabase.database.getEmployee(empId);
         assertNotNull(e);
 
         PaymentClassification pc = e.getClassification();
@@ -272,7 +273,7 @@ public class TestPayroll {
         ChangeCommissionedTransaction cct = new ChangeCommissionedTransaction(empId, 2000, 3.2);
         cct.execute();
 
-        Employee e = PayrollDatabase.getEmployee(empId);
+        Employee e = GlobalDatabase.database.getEmployee(empId);
         assertNotNull(e);
 
         PaymentClassification pc = e.getClassification();
@@ -295,7 +296,7 @@ public class TestPayroll {
         ChangeDirectTransaction cdt = new ChangeDirectTransaction(empId, "bank", 10800);
         cdt.execute();
 
-        Employee e = PayrollDatabase.getEmployee(empId);
+        Employee e = GlobalDatabase.database.getEmployee(empId);
         assertNotNull(e);
 
         PaymentMethod pm = e.getMethod();
@@ -314,7 +315,7 @@ public class TestPayroll {
         ChangeMailTransaction cmt = new ChangeMailTransaction(empId, "mailAddress");
         cmt.execute();
 
-        Employee e = PayrollDatabase.getEmployee(empId);
+        Employee e = GlobalDatabase.database.getEmployee(empId);
         assertNotNull(e);
 
         PaymentMethod pm = e.getMethod();
@@ -331,14 +332,14 @@ public class TestPayroll {
 
         ChangeMailTransaction cmt = new ChangeMailTransaction(empId, "mailAddress");
         cmt.execute();
-        Employee e = PayrollDatabase.getEmployee(empId);
+        Employee e = GlobalDatabase.database.getEmployee(empId);
         assertNotNull(e);
         assertTrue(e.getMethod() instanceof MailMethod);
 
         ChangeHoldTransaction cht = new ChangeHoldTransaction(empId);
         cht.execute();
 
-        e = PayrollDatabase.getEmployee(empId);
+        e = GlobalDatabase.database.getEmployee(empId);
         assertNotNull(e);
 
         PaymentMethod pm = e.getMethod();
@@ -356,7 +357,7 @@ public class TestPayroll {
         ChangeMemberTransaction cmt = new ChangeMemberTransaction(empId, memberId, 99.42);
         cmt.execute();
 
-        Employee e = PayrollDatabase.getEmployee(empId);
+        Employee e = GlobalDatabase.database.getEmployee(empId);
         assertNotNull(e);
 
         Affiliation af = e.getAffiliation();
@@ -364,7 +365,7 @@ public class TestPayroll {
         assertNotNull(uf);
         assertEquals(99.42, uf.getDues());
 
-        Employee member = PayrollDatabase.getUnionMember(memberId);
+        Employee member = GlobalDatabase.database.getUnionMember(memberId);
         assertNotNull(member);
         assertEquals(e, member);
     }
@@ -379,7 +380,7 @@ public class TestPayroll {
         ChangeMemberTransaction cmt = new ChangeMemberTransaction(empId, memberId, 99.42);
         cmt.execute();
 
-        Employee e = PayrollDatabase.getEmployee(empId);
+        Employee e = GlobalDatabase.database.getEmployee(empId);
         assertNotNull(e);
 
         Affiliation af = e.getAffiliation();
@@ -387,7 +388,7 @@ public class TestPayroll {
         assertNotNull(uf);
         assertEquals(99.42, uf.getDues());
 
-        Employee member = PayrollDatabase.getUnionMember(memberId);
+        Employee member = GlobalDatabase.database.getUnionMember(memberId);
         assertEquals(e, member);
 
         ChangeUnaffiliatedTransaction cut = new ChangeUnaffiliatedTransaction(empId);
@@ -395,7 +396,7 @@ public class TestPayroll {
 
         af = e.getAffiliation();
         NoAffiliation na = (NoAffiliation) af;
-        member = PayrollDatabase.getUnionMember(memberId);
+        member = GlobalDatabase.database.getUnionMember(memberId);
         assertEquals(na, member);
     }
 

@@ -1,6 +1,7 @@
-package casestudy.Affiliations;
+package casestudy.AffiliationTransactions;
 
-import casestudy.PayrollDatabase.PayrollDatabase;
+import casestudy.Affiliations.UnionAffiliation;
+import casestudy.PayrollDatabase.GlobalDatabase;
 import casestudy.PayrollDomain.Affiliation;
 import casestudy.PayrollDomain.Employee;
 
@@ -16,7 +17,7 @@ public class ChangeMemberTransaction extends ChangeAffiliationTransaction {
 
     @Override
     void recordMembership(Employee e) {
-        PayrollDatabase.addUnionMember(itsMemberId, e);
+        GlobalDatabase.database.addUnionMember(itsMemberId, e);
     }
 
     @Override

@@ -1,4 +1,4 @@
-package casestudy.Affiliations;
+package casestudy.AffiliationTransactions;
 
 import casestudy.GeneralTransactions.ChangeEmployeeTransaction;
 import casestudy.PayrollDomain.Affiliation;

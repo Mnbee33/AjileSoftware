@@ -1,6 +1,6 @@
 package casestudy.GeneralTransactions;
 
-import casestudy.PayrollDatabase.PayrollDatabase;
+import casestudy.PayrollDatabase.GlobalDatabase;
 import casestudy.PayrollDomain.Employee;
 import casestudy.TransactionApplication.Transaction;
 
@@ -13,7 +13,7 @@ public abstract class ChangeEmployeeTransaction implements Transaction {
 
     @Override
     public void execute() {
-        Employee e = PayrollDatabase.getEmployee(itsEmpId);
+        Employee e = GlobalDatabase.database.getEmployee(itsEmpId);
         if (e != null) {
             change(e);
         }

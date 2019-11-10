@@ -1,6 +1,6 @@
 package casestudy.GeneralTransactions;
 
-import casestudy.PayrollDatabase.PayrollDatabase;
+import casestudy.PayrollDatabase.GlobalDatabase;
 import casestudy.TransactionApplication.Transaction;
 
 public class DeleteEmployeeTransaction implements Transaction {
@@ -12,6 +12,6 @@ public class DeleteEmployeeTransaction implements Transaction {
 
     @Override
     public void execute() {
-        PayrollDatabase.deleteEmployee(itsEmpId);
+        GlobalDatabase.database.deleteEmployee(itsEmpId);
     }
 }

@@ -1,6 +1,7 @@
-package casestudy.Affiliations;
+package casestudy.AffiliationTransactions;
 
-import casestudy.PayrollDatabase.PayrollDatabase;
+import casestudy.Affiliations.UnionAffiliation;
+import casestudy.PayrollDatabase.GlobalDatabase;
 import casestudy.PayrollDomain.Affiliation;
 import casestudy.PayrollDomain.Employee;
 
@@ -15,7 +16,7 @@ public class ChangeUnaffiliatedTransaction extends ChangeAffiliationTransaction 
         if (af instanceof UnionAffiliation) {
             UnionAffiliation uf = (UnionAffiliation) af;
             int memberId = uf.getMemberId();
-            PayrollDatabase.removeUnionMember(memberId);
+            GlobalDatabase.database.removeUnionMember(memberId);
         }
     }
 

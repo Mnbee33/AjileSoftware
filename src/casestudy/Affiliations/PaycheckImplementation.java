@@ -1,8 +1,10 @@
-package casestudy.Payment;
+package casestudy.Affiliations;
+
+import casestudy.PayrollDomain.PayCheck;
 
 import java.time.LocalDate;
 
-public class PayCheck {
+public class PaycheckImplementation implements PayCheck {
     private LocalDate itsPayPeriodStartDate;
     private LocalDate itsPayPeriodEndDate;
 
@@ -10,7 +12,7 @@ public class PayCheck {
     private double itsDeductions;
     private double itsNetPay;
 
-    public PayCheck(LocalDate payPeriodStartDate, LocalDate payPeriodEndDate) {
+    public PaycheckImplementation(LocalDate payPeriodStartDate, LocalDate payPeriodEndDate) {
         itsPayPeriodStartDate = payPeriodStartDate;
         itsPayPeriodEndDate = payPeriodEndDate;
     }

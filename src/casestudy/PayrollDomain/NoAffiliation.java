@@ -1,7 +1,4 @@
-package casestudy.Affiliations;
-
-import casestudy.Payment.PayCheck;
-import casestudy.PayrollDomain.Affiliation;
+package casestudy.PayrollDomain;
 
 import java.time.LocalDate;
 

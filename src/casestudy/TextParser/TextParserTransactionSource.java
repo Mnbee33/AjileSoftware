@@ -1,16 +1,13 @@
 package casestudy.TextParser;
 
-import casestudy.Affiliations.ChangeMemberTransaction;
-import casestudy.Affiliations.ChangeUnaffiliatedTransaction;
-import casestudy.Affiliations.ServiceChargeTransaction;
+import casestudy.AffiliationTransactions.ChangeMemberTransaction;
+import casestudy.AffiliationTransactions.ChangeUnaffiliatedTransaction;
+import casestudy.AffiliationTransactions.ServiceChargeTransaction;
 import casestudy.ClassificationTransactions.*;
-import casestudy.EmployeeAttributeTransactions.ChangeAddressTransaction;
-import casestudy.EmployeeAttributeTransactions.ChangeNameTransaction;
-import casestudy.GeneralTransactions.DeleteEmployeeTransaction;
+import casestudy.GeneralTransactions.*;
 import casestudy.MethodTransactions.ChangeDirectTransaction;
 import casestudy.MethodTransactions.ChangeHoldTransaction;
 import casestudy.MethodTransactions.ChangeMailTransaction;
-import casestudy.Payment.PaydayTransaction;
 import casestudy.TransactionApplication.Transaction;
 import casestudy.TransactionApplication.TransactionSource;
 

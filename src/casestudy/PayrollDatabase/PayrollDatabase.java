@@ -2,44 +2,22 @@ package casestudy.PayrollDatabase;
 
 import casestudy.PayrollDomain.Employee;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-public class PayrollDatabase {
-    private static Map<Integer, Employee> itsEmployees = new HashMap<>();
-    private static Map<Integer, Employee> itsUnionMembers = new HashMap<>();
+public interface PayrollDatabase {
+    void addEmployee(int empId, Employee e);
 
-    public static void addEmployee(int empId, Employee e) {
-        itsEmployees.put(empId, e);
-    }
+    Employee getEmployee(int empId);
 
-    public static Employee getEmployee(int empId) {
-        return itsEmployees.get(empId);
-    }
+    void clear();
 
-    public static void clear() {
-        itsEmployees.clear();
-    }
+    void deleteEmployee(int empId);
 
-    public static void deleteEmployee(int empId) {
-        itsEmployees.remove(empId);
-    }
+    void addUnionMember(int memberId, Employee e);
 
-    public static void addUnionMember(int memberId, Employee e) {
-        itsUnionMembers.put(memberId, e);
-    }
+    Employee getUnionMember(int memberId);
 
-    public static Employee getUnionMember(int memberId) {
-        return itsUnionMembers.get(memberId);
-    }
+    void removeUnionMember(int memberId);
 
-    public static void removeUnionMember(int memberId) {
-        itsUnionMembers.remove(memberId);
-    }
-
-    public static List<Integer> getAllEmployeeIds() {
-        return new ArrayList<>(itsEmployees.keySet());
-    }
+    List<Integer> getAllEmployeeIds();
 }

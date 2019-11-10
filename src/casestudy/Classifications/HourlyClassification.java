@@ -1,8 +1,8 @@
 package casestudy.Classifications;
 
-import casestudy.Payment.Date;
-import casestudy.Payment.PayCheck;
+import casestudy.PayrollDomain.PayCheck;
 import casestudy.PayrollDomain.PaymentClassification;
+import casestudy.PayrollUtil.Date;
 
 import java.time.LocalDate;
 import java.util.HashMap;

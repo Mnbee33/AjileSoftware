@@ -1,8 +1,5 @@
 package casestudy.PayrollDomain;
 
-import casestudy.Affiliations.NoAffiliation;
-import casestudy.Payment.PayCheck;
-
 import java.time.LocalDate;
 
 public class Employee {
