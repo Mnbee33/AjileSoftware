@@ -1,5 +1,17 @@
 package casestudy;
 
+import casestudy.Affiliations.UnionAffiliation;
+import casestudy.Classifications.*;
+import casestudy.Methods.DirectMethod;
+import casestudy.Methods.HoldMethod;
+import casestudy.Methods.MailMethod;
+import casestudy.PayrollApplication.PayrollApplication;
+import casestudy.PayrollApplication.TextParserTransactionSource;
+import casestudy.PayrollApplication.TransactionSource;
+import casestudy.PayrollDatabase.Employee;
+import casestudy.PayrollDatabase.PayrollDatabase;
+import casestudy.Transactions.PaydayTransaction;
+import casestudy.Transactions.Transaction;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

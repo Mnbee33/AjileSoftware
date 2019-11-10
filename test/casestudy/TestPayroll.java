@@ -1,5 +1,20 @@
 package casestudy;
 
+import casestudy.Affiliations.Affiliation;
+import casestudy.Affiliations.NoAffiliation;
+import casestudy.Affiliations.UnionAffiliation;
+import casestudy.Classifications.*;
+import casestudy.Methods.DirectMethod;
+import casestudy.Methods.HoldMethod;
+import casestudy.Methods.MailMethod;
+import casestudy.Methods.PaymentMethod;
+import casestudy.PayrollDatabase.Employee;
+import casestudy.PayrollDatabase.PayrollDatabase;
+import casestudy.Schedules.BiweeklySchedule;
+import casestudy.Schedules.MonthlySchedule;
+import casestudy.Schedules.PaymentSchedule;
+import casestudy.Schedules.WeeklySchedule;
+import casestudy.Transactions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
