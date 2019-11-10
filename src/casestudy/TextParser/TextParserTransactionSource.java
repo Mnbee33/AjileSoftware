@@ -3,7 +3,6 @@ package casestudy.TextParser;
 import casestudy.TransactionApplication.Transaction;
 import casestudy.TransactionApplication.TransactionSource;
 import casestudy.TransactionFactory.TransactionFactory;
-import casestudy.TransactionFactoryImplementation.ChangeHoldTransaction;
 import casestudy.TransactionFactoryImplementation.PaydayTransaction;
 
 import java.io.BufferedReader;
@@ -128,7 +127,7 @@ public class TextParserTransactionSource implements TransactionSource {
                 double commissionedRate = Double.parseDouble(commands[4]);
                 return factory.makeChangeCommissionedTransaction(empId, commissionedSalary, commissionedRate);
             case "Hold":
-                return new ChangeHoldTransaction(empId);
+                return factory.makeChangeHoldTransaction(empId);
             case "Direct":
                 String bank = commands[3];
                 long account = Long.parseLong(commands[4]);
