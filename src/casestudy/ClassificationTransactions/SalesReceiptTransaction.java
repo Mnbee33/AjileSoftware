@@ -1,7 +1,6 @@
 package casestudy.ClassificationTransactions;
 
 import casestudy.Classifications.CommissionedClassification;
-import casestudy.Classifications.SalesReceipt;
 import casestudy.PayrollDatabase.PayrollDatabase;
 import casestudy.PayrollDomain.Employee;
 import casestudy.PayrollDomain.PaymentClassification;
@@ -27,7 +26,7 @@ public class SalesReceiptTransaction implements Transaction {
             PaymentClassification pc = e.getClassification();
             if (pc instanceof CommissionedClassification) {
                 CommissionedClassification cc = (CommissionedClassification) pc;
-                cc.addSaleReceipt(new SalesReceipt(itsDate, itsAmount));
+                cc.addSaleReceipt(itsDate, itsAmount);
             } else {
                 throw new RuntimeException("Tried to add salereceipt to non-commissioned employee.");
             }

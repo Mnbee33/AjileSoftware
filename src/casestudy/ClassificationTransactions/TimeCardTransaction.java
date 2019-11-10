@@ -1,7 +1,6 @@
 package casestudy.ClassificationTransactions;
 
 import casestudy.Classifications.HourlyClassification;
-import casestudy.Classifications.TimeCard;
 import casestudy.PayrollDatabase.PayrollDatabase;
 import casestudy.PayrollDomain.Employee;
 import casestudy.PayrollDomain.PaymentClassification;
@@ -27,7 +26,7 @@ public class TimeCardTransaction implements Transaction {
             PaymentClassification pc = e.getClassification();
             if (pc instanceof HourlyClassification) {
                 HourlyClassification hc = (HourlyClassification) pc;
-                hc.addTimeCard(new TimeCard(itsDate, itsHours));
+                hc.addTimeCard(itsDate, itsHours);
             } else {
                 throw new RuntimeException("Tried to add timecard to non-hourly employee.");
             }

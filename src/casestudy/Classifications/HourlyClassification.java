@@ -24,7 +24,8 @@ public class HourlyClassification implements PaymentClassification {
         return timeCards.get(date);
     }
 
-    public void addTimeCard(TimeCard timeCard) {
+    public void addTimeCard(LocalDate date, double hours) {
+        TimeCard timeCard = new TimeCard(date, hours);
         timeCards.put(timeCard.getDate(), timeCard);
     }
 

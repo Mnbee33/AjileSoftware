@@ -30,7 +30,8 @@ public class CommissionedClassification implements PaymentClassification {
         return itsSalesReceipts.get(date);
     }
 
-    public void addSaleReceipt(SalesReceipt salesReceipt) {
+    public void addSaleReceipt(LocalDate date, double amount) {
+        SalesReceipt salesReceipt = new SalesReceipt(date, amount);
         itsSalesReceipts.put(salesReceipt.getDate(), salesReceipt);
     }
 
