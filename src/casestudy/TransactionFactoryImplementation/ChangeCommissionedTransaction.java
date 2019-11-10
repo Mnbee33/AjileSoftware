@@ -1,6 +1,7 @@
-package casestudy.ClassificationTransactions;
+package casestudy.TransactionFactoryImplementation;
 
 import casestudy.Classifications.CommissionedClassification;
+import casestudy.GeneralTransactions.ChangeClassificationTransaction;
 import casestudy.PayrollDomain.PaymentClassification;
 import casestudy.PayrollDomain.PaymentSchedule;
 import casestudy.Schedules.BiweeklySchedule;
@@ -16,12 +17,12 @@ public class ChangeCommissionedTransaction extends ChangeClassificationTransacti
     }
 
     @Override
-    PaymentSchedule getSchedule() {
+    protected PaymentSchedule getSchedule() {
         return new BiweeklySchedule();
     }
 
     @Override
-    PaymentClassification getClassification() {
+    protected PaymentClassification getClassification() {
         return new CommissionedClassification(itsSalary, itsRate);
     }
 }

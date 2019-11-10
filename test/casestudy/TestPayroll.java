@@ -1,15 +1,7 @@
 package casestudy;
 
-import casestudy.AffiliationTransactions.ChangeMemberTransaction;
-import casestudy.AffiliationTransactions.ChangeUnaffiliatedTransaction;
-import casestudy.AffiliationTransactions.ServiceChargeTransaction;
 import casestudy.Affiliations.UnionAffiliation;
-import casestudy.ClassificationTransactions.*;
 import casestudy.Classifications.*;
-import casestudy.GeneralTransactions.*;
-import casestudy.MethodTransactions.ChangeDirectTransaction;
-import casestudy.MethodTransactions.ChangeHoldTransaction;
-import casestudy.MethodTransactions.ChangeMailTransaction;
 import casestudy.Methods.DirectMethod;
 import casestudy.Methods.HoldMethod;
 import casestudy.Methods.MailMethod;
@@ -19,6 +11,7 @@ import casestudy.PayrollDomain.*;
 import casestudy.Schedules.BiweeklySchedule;
 import casestudy.Schedules.MonthlySchedule;
 import casestudy.Schedules.WeeklySchedule;
+import casestudy.TransactionFactoryImplementation.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

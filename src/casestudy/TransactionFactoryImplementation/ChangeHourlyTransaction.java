@@ -1,6 +1,7 @@
-package casestudy.ClassificationTransactions;
+package casestudy.TransactionFactoryImplementation;
 
 import casestudy.Classifications.HourlyClassification;
+import casestudy.GeneralTransactions.ChangeClassificationTransaction;
 import casestudy.PayrollDomain.PaymentClassification;
 import casestudy.PayrollDomain.PaymentSchedule;
 import casestudy.Schedules.WeeklySchedule;
@@ -14,12 +15,12 @@ public class ChangeHourlyTransaction extends ChangeClassificationTransaction {
     }
 
     @Override
-    PaymentSchedule getSchedule() {
+    protected PaymentSchedule getSchedule() {
         return new WeeklySchedule();
     }
 
     @Override
-    PaymentClassification getClassification() {
+    protected PaymentClassification getClassification() {
         return new HourlyClassification(itsRate);
     }
 }

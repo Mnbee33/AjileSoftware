@@ -1,15 +1,10 @@
 package casestudy.TextParser;
 
-import casestudy.AffiliationTransactions.ChangeMemberTransaction;
-import casestudy.AffiliationTransactions.ChangeUnaffiliatedTransaction;
-import casestudy.AffiliationTransactions.ServiceChargeTransaction;
-import casestudy.ClassificationTransactions.*;
-import casestudy.GeneralTransactions.*;
-import casestudy.MethodTransactions.ChangeDirectTransaction;
-import casestudy.MethodTransactions.ChangeHoldTransaction;
-import casestudy.MethodTransactions.ChangeMailTransaction;
 import casestudy.TransactionApplication.Transaction;
 import casestudy.TransactionApplication.TransactionSource;
+import casestudy.TransactionFactory.TransactionFactory;
+import casestudy.TransactionFactoryImplementation.ChangeHoldTransaction;
+import casestudy.TransactionFactoryImplementation.PaydayTransaction;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -20,9 +15,11 @@ import java.util.List;
 
 public class TextParserTransactionSource implements TransactionSource {
     private String path;
+    private TransactionFactory factory;
 
-    public TextParserTransactionSource(String path) {
+    public TextParserTransactionSource(String path, TransactionFactory factory) {
         this.path = path;
+        this.factory = factory;
     }
 
     @Override
@@ -73,12 +70,12 @@ public class TextParserTransactionSource implements TransactionSource {
 
         switch (type) {
             case "H":
-                return new AddHourlyEmployee(empId, name, address, salary);
+                return factory.makeAddHourlyEmployee(empId, name, address, salary);
             case "S":
-                return new AddSalariedEmployee(empId, name, address, salary);
+                return factory.makeAddSalariedEmployee(empId, name, address, salary);
             case "C":
                 double commissionRate = Double.parseDouble(commands[6]);
-                return new AddCommissionedEmployee(empId, name, address, salary, commissionRate);
+                return factory.makeAddCommissionedEmployee(empId, name, address, salary, commissionRate);
             default:
                 return null;
         }
@@ -86,28 +83,28 @@ public class TextParserTransactionSource implements TransactionSource {
 
     private Transaction delEmp(String[] command) {
         int empId = Integer.parseInt(command[1]);
-        return new DeleteEmployeeTransaction(empId);
+        return factory.makeDeleteEmployeeTransaction(empId);
     }
 
     private Transaction timeCard(String[] commands) {
         int empId = Integer.parseInt(commands[1]);
         LocalDate date = LocalDate.parse(commands[2]);
         double hour = Double.parseDouble(commands[3]);
-        return new TimeCardTransaction(date, hour, empId);
+        return factory.makeTimeCardTransaction(date, hour, empId);
     }
 
     private Transaction salesReceipt(String[] commands) {
         int empId = Integer.parseInt(commands[1]);
         LocalDate date = LocalDate.parse(commands[2]);
         double amount = Double.parseDouble(commands[3]);
-        return new SalesReceiptTransaction(date, amount, empId);
+        return factory.makeSalesReceiptTransaction(date, amount, empId);
     }
 
     private Transaction serviceCharge(String[] commands) {
         int memberId = Integer.parseInt(commands[1]);
         LocalDate date = LocalDate.parse(commands[2]);
         double amount = Double.parseDouble(commands[3]);
-        return new ServiceChargeTransaction(memberId, date, amount);
+        return factory.makeServiceChargeTransaction(memberId, date, amount);
     }
 
     private Transaction chgEmp(String[] commands) {
@@ -116,42 +113,42 @@ public class TextParserTransactionSource implements TransactionSource {
         switch (type) {
             case "Name":
                 String name = commands[3];
-                return new ChangeNameTransaction(empId, name);
+                return factory.makeChangeNameTransaction(empId, name);
             case "Address":
                 String address = commands[3];
-                return new ChangeAddressTransaction(empId, address);
+                return factory.makeChangeAddressTransaction(empId, address);
             case "Hourly":
                 double hourlyRate = Double.parseDouble(commands[3]);
-                return new ChangeHourlyTransaction(empId, hourlyRate);
+                return factory.makeChangeHourlyTransaction(empId, hourlyRate);
             case "Salaried":
                 double salary = Double.parseDouble(commands[3]);
-                return new ChangeSalariedTransaction(empId, salary);
+                return factory.makeChangeSalariedTransaction(empId, salary);
             case "Commissioned":
                 double commissionedSalary = Double.parseDouble(commands[3]);
                 double commissionedRate = Double.parseDouble(commands[4]);
-                return new ChangeCommissionedTransaction(empId, commissionedSalary, commissionedRate);
+                return factory.makeChangeCommissionedTransaction(empId, commissionedSalary, commissionedRate);
             case "Hold":
                 return new ChangeHoldTransaction(empId);
             case "Direct":
                 String bank = commands[3];
                 long account = Long.parseLong(commands[4]);
-                return new ChangeDirectTransaction(empId, bank, account);
+                return factory.makeChangeDirectTransaction(empId, bank, account);
             case "Mail":
                 String mailAddress = commands[3];
-                return new ChangeMailTransaction(empId, mailAddress);
+                return factory.makeChangeMailTransaction(empId, mailAddress);
             case "Member":
                 int memberId = Integer.parseInt(commands[3]);
                 double dues = Double.parseDouble(commands[5]);
-                return new ChangeMemberTransaction(empId, memberId, dues);
+                return factory.makeChangeMemberTransaction(empId, memberId, dues);
             case "NoMember":
-                return new ChangeUnaffiliatedTransaction(empId);
+                return factory.makeChangeUnaffiliatedTransaction(empId);
             default:
                 return null;
         }
     }
 
-    private Transaction payDay(String[] commands) {
+    private PaydayTransaction payDay(String[] commands) {
         LocalDate payDate = LocalDate.parse(commands[1]);
-        return new PaydayTransaction(payDate);
+        return factory.makePaydayTransaction(payDate);
     }
 }

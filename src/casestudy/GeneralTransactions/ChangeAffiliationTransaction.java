@@ -1,6 +1,5 @@
-package casestudy.AffiliationTransactions;
+package casestudy.GeneralTransactions;
 
-import casestudy.GeneralTransactions.ChangeEmployeeTransaction;
 import casestudy.PayrollDomain.Affiliation;
 import casestudy.PayrollDomain.Employee;
 
@@ -15,7 +14,7 @@ public abstract class ChangeAffiliationTransaction extends ChangeEmployeeTransac
         e.setAffiliation(getAffiliation());
     }
 
-    abstract void recordMembership(Employee e);
+    protected abstract void recordMembership(Employee e);
 
-    abstract Affiliation getAffiliation();
+    protected abstract Affiliation getAffiliation();
 }

@@ -1,5 +1,6 @@
-package casestudy.MethodTransactions;
+package casestudy.TransactionFactoryImplementation;
 
+import casestudy.GeneralTransactions.ChangeMethodTransaction;
 import casestudy.Methods.MailMethod;
 import casestudy.PayrollDomain.PaymentMethod;
 
@@ -12,7 +13,7 @@ public class ChangeMailTransaction extends ChangeMethodTransaction {
     }
 
     @Override
-    PaymentMethod getMethod() {
+    protected PaymentMethod getMethod() {
         return new MailMethod(itsAddress);
     }
 }

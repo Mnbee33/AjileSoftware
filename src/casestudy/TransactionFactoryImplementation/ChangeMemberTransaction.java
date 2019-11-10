@@ -1,6 +1,7 @@
-package casestudy.AffiliationTransactions;
+package casestudy.TransactionFactoryImplementation;
 
 import casestudy.Affiliations.UnionAffiliation;
+import casestudy.GeneralTransactions.ChangeAffiliationTransaction;
 import casestudy.PayrollDatabase.GlobalDatabase;
 import casestudy.PayrollDomain.Affiliation;
 import casestudy.PayrollDomain.Employee;
@@ -16,12 +17,12 @@ public class ChangeMemberTransaction extends ChangeAffiliationTransaction {
     }
 
     @Override
-    void recordMembership(Employee e) {
+    protected void recordMembership(Employee e) {
         GlobalDatabase.database.addUnionMember(itsMemberId, e);
     }
 
     @Override
-    Affiliation getAffiliation() {
+    protected Affiliation getAffiliation() {
         return new UnionAffiliation(itsMemberId, itsDues);
     }
 }

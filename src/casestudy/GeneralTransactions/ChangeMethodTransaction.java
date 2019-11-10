@@ -1,6 +1,5 @@
-package casestudy.MethodTransactions;
+package casestudy.GeneralTransactions;
 
-import casestudy.GeneralTransactions.ChangeEmployeeTransaction;
 import casestudy.PayrollDomain.Employee;
 import casestudy.PayrollDomain.PaymentMethod;
 
@@ -15,5 +14,5 @@ public abstract class ChangeMethodTransaction extends ChangeEmployeeTransaction 
         e.setMethod(getMethod());
     }
 
-    abstract PaymentMethod getMethod();
+    protected abstract PaymentMethod getMethod();
 }

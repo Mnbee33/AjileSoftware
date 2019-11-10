@@ -1,5 +1,6 @@
-package casestudy.MethodTransactions;
+package casestudy.TransactionFactoryImplementation;
 
+import casestudy.GeneralTransactions.ChangeMethodTransaction;
 import casestudy.Methods.HoldMethod;
 import casestudy.PayrollDomain.PaymentMethod;
 
@@ -9,7 +10,7 @@ public class ChangeHoldTransaction extends ChangeMethodTransaction {
     }
 
     @Override
-    PaymentMethod getMethod() {
+    protected PaymentMethod getMethod() {
         return new HoldMethod();
     }
 }

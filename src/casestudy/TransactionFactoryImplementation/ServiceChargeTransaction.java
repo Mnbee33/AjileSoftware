@@ -1,4 +1,4 @@
-package casestudy.AffiliationTransactions;
+package casestudy.TransactionFactoryImplementation;
 
 import casestudy.Affiliations.UnionAffiliation;
 import casestudy.PayrollDatabase.GlobalDatabase;

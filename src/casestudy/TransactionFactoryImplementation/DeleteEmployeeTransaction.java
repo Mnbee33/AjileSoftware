@@ -1,4 +1,4 @@
-package casestudy.GeneralTransactions;
+package casestudy.TransactionFactoryImplementation;
 
 import casestudy.PayrollDatabase.GlobalDatabase;
 import casestudy.TransactionApplication.Transaction;

@@ -1,6 +1,7 @@
-package casestudy.GeneralTransactions;
+package casestudy.TransactionFactoryImplementation;
 
 import casestudy.Classifications.CommissionedClassification;
+import casestudy.GeneralTransactions.AddEmployeeTransaction;
 import casestudy.PayrollDomain.PaymentClassification;
 import casestudy.PayrollDomain.PaymentSchedule;
 import casestudy.Schedules.BiweeklySchedule;

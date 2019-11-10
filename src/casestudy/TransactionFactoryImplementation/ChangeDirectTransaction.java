@@ -1,5 +1,6 @@
-package casestudy.MethodTransactions;
+package casestudy.TransactionFactoryImplementation;
 
+import casestudy.GeneralTransactions.ChangeMethodTransaction;
 import casestudy.Methods.DirectMethod;
 import casestudy.PayrollDomain.PaymentMethod;
 
@@ -14,7 +15,7 @@ public class ChangeDirectTransaction extends ChangeMethodTransaction {
     }
 
     @Override
-    PaymentMethod getMethod() {
+    public PaymentMethod getMethod() {
         return new DirectMethod(itsBank, itsAccount);
     }
 }

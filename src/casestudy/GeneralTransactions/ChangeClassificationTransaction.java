@@ -1,6 +1,5 @@
-package casestudy.ClassificationTransactions;
+package casestudy.GeneralTransactions;
 
-import casestudy.GeneralTransactions.ChangeEmployeeTransaction;
 import casestudy.PayrollDomain.Employee;
 import casestudy.PayrollDomain.PaymentClassification;
 import casestudy.PayrollDomain.PaymentSchedule;
@@ -17,7 +16,7 @@ public abstract class ChangeClassificationTransaction extends ChangeEmployeeTran
         e.setClassification(getClassification());
     }
 
-    abstract PaymentSchedule getSchedule();
+    protected abstract PaymentSchedule getSchedule();
 
-    abstract PaymentClassification getClassification();
+    protected abstract PaymentClassification getClassification();
 }

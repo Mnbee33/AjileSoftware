@@ -1,4 +1,4 @@
-package casestudy.ClassificationTransactions;
+package casestudy.TransactionFactoryImplementation;
 
 import casestudy.Classifications.HourlyClassification;
 import casestudy.PayrollDatabase.GlobalDatabase;
