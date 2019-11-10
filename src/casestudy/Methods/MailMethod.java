@@ -1,6 +1,7 @@
 package casestudy.Methods;
 
-import casestudy.Transactions.PayCheck;
+import casestudy.Payment.PayCheck;
+import casestudy.PayrollDomain.PaymentMethod;
 
 public class MailMethod implements PaymentMethod {
     private String itsAddress;

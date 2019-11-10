@@ -1,20 +1,21 @@
 package casestudy;
 
-import casestudy.Affiliations.Affiliation;
-import casestudy.Affiliations.NoAffiliation;
-import casestudy.Affiliations.UnionAffiliation;
+import casestudy.Affiliations.*;
 import casestudy.Classifications.*;
-import casestudy.Methods.DirectMethod;
-import casestudy.Methods.HoldMethod;
-import casestudy.Methods.MailMethod;
-import casestudy.Methods.PaymentMethod;
-import casestudy.PayrollDatabase.Employee;
+import casestudy.EmployeeAttribute.ChangeAddressTransaction;
+import casestudy.EmployeeAttribute.ChangeNameTransaction;
+import casestudy.Methods.*;
+import casestudy.OperationEmployee.AddCommissionedEmployee;
+import casestudy.OperationEmployee.AddHourlyEmployee;
+import casestudy.OperationEmployee.AddSalariedEmployee;
+import casestudy.OperationEmployee.DeleteEmployeeTransaction;
+import casestudy.Payment.PayCheck;
+import casestudy.Payment.PaydayTransaction;
 import casestudy.PayrollDatabase.PayrollDatabase;
+import casestudy.PayrollDomain.*;
 import casestudy.Schedules.BiweeklySchedule;
 import casestudy.Schedules.MonthlySchedule;
-import casestudy.Schedules.PaymentSchedule;
 import casestudy.Schedules.WeeklySchedule;
-import casestudy.Transactions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

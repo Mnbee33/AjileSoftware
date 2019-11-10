@@ -1,5 +1,7 @@
 package casestudy.Schedules;
 
+import casestudy.PayrollDomain.PaymentSchedule;
+
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 

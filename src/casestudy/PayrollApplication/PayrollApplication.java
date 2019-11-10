@@ -1,6 +1,6 @@
 package casestudy.PayrollApplication;
 
-import casestudy.Transactions.Transaction;
+import casestudy.PayrollDomain.Transaction;
 
 import java.util.List;
 

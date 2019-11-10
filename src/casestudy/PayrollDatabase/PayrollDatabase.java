@@ -1,5 +1,7 @@
 package casestudy.PayrollDatabase;
 
+import casestudy.PayrollDomain.Employee;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

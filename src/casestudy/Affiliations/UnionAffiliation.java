@@ -1,7 +1,8 @@
 package casestudy.Affiliations;
 
-import casestudy.Transactions.Date;
-import casestudy.Transactions.PayCheck;
+import casestudy.Payment.Date;
+import casestudy.Payment.PayCheck;
+import casestudy.PayrollDomain.Affiliation;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;

@@ -1,5 +1,7 @@
 package casestudy.Schedules;
 
+import casestudy.PayrollDomain.PaymentSchedule;
+
 import java.time.LocalDate;
 
 public class MonthlySchedule implements PaymentSchedule {

@@ -5,13 +5,13 @@ import casestudy.Classifications.*;
 import casestudy.Methods.DirectMethod;
 import casestudy.Methods.HoldMethod;
 import casestudy.Methods.MailMethod;
+import casestudy.Payment.PaydayTransaction;
 import casestudy.PayrollApplication.PayrollApplication;
-import casestudy.PayrollApplication.TextParserTransactionSource;
 import casestudy.PayrollApplication.TransactionSource;
-import casestudy.PayrollDatabase.Employee;
 import casestudy.PayrollDatabase.PayrollDatabase;
-import casestudy.Transactions.PaydayTransaction;
-import casestudy.Transactions.Transaction;
+import casestudy.PayrollDomain.Employee;
+import casestudy.PayrollDomain.Transaction;
+import casestudy.TextParser.TextParserTransactionSource;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

@@ -1,6 +1,7 @@
 package casestudy.Classifications;
 
-import casestudy.Transactions.PayCheck;
+import casestudy.Payment.PayCheck;
+import casestudy.PayrollDomain.PaymentClassification;
 
 public class SalariedClassification implements PaymentClassification {
     private double itsSalary;
