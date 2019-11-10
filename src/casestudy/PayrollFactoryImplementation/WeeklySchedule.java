@@ -1,4 +1,4 @@
-package casestudy.Schedules;
+package casestudy.PayrollFactoryImplementation;
 
 import casestudy.PayrollDomain.PaymentSchedule;
 
