@@ -1,9 +1,9 @@
 package casestudy.TransactionFactoryImplementation;
 
-import casestudy.Classifications.HourlyClassification;
 import casestudy.PayrollDatabase.GlobalDatabase;
 import casestudy.PayrollDomain.Employee;
 import casestudy.PayrollDomain.PaymentClassification;
+import casestudy.PayrollFactoryImplementation.HourlyClassification;
 import casestudy.TransactionApplication.Transaction;
 
 import java.time.LocalDate;

@@ -1,9 +1,9 @@
 package casestudy.TransactionFactoryImplementation;
 
-import casestudy.Affiliations.UnionAffiliation;
 import casestudy.PayrollDatabase.GlobalDatabase;
 import casestudy.PayrollDomain.Affiliation;
 import casestudy.PayrollDomain.Employee;
+import casestudy.PayrollFactoryImplementation.UnionAffiliation;
 import casestudy.TransactionApplication.Transaction;
 
 import java.time.LocalDate;

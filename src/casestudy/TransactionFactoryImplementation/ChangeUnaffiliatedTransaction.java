@@ -1,14 +1,15 @@
 package casestudy.TransactionFactoryImplementation;
 
-import casestudy.Affiliations.UnionAffiliation;
-import casestudy.GeneralTransactions.ChangeAffiliationTransaction;
+import casestudy.AbstractTransactions.ChangeAffiliationTransaction;
 import casestudy.PayrollDatabase.GlobalDatabase;
 import casestudy.PayrollDomain.Affiliation;
 import casestudy.PayrollDomain.Employee;
+import casestudy.PayrollFactory.PayrollFactory;
+import casestudy.PayrollFactoryImplementation.UnionAffiliation;
 
 public class ChangeUnaffiliatedTransaction extends ChangeAffiliationTransaction {
-    public ChangeUnaffiliatedTransaction(int empId) {
-        super(empId);
+    public ChangeUnaffiliatedTransaction(int empId, PayrollFactory pf) {
+        super(empId, pf);
     }
 
     @Override
@@ -23,6 +24,6 @@ public class ChangeUnaffiliatedTransaction extends ChangeAffiliationTransaction 
 
     @Override
     protected Affiliation getAffiliation() {
-        return null;
+        return itsPayrollFactory.makeNoAffiliation();
     }
 }

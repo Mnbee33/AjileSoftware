@@ -1,28 +1,27 @@
 package casestudy.TransactionFactoryImplementation;
 
-import casestudy.Classifications.CommissionedClassification;
-import casestudy.GeneralTransactions.ChangeClassificationTransaction;
+import casestudy.AbstractTransactions.ChangeClassificationTransaction;
 import casestudy.PayrollDomain.PaymentClassification;
 import casestudy.PayrollDomain.PaymentSchedule;
-import casestudy.Schedules.BiweeklySchedule;
+import casestudy.PayrollFactory.PayrollFactory;
 
 public class ChangeCommissionedTransaction extends ChangeClassificationTransaction {
     private double itsSalary;
     private double itsRate;
 
-    public ChangeCommissionedTransaction(int empId, double salary, double rate) {
-        super(empId);
+    public ChangeCommissionedTransaction(int empId, double salary, double rate, PayrollFactory pf) {
+        super(empId, pf);
         itsSalary = salary;
         itsRate = rate;
     }
 
     @Override
     protected PaymentSchedule getSchedule() {
-        return new BiweeklySchedule();
+        return itsPayrollFactory.makeBiweeklySchedule();
     }
 
     @Override
     protected PaymentClassification getClassification() {
-        return new CommissionedClassification(itsSalary, itsRate);
+        return itsPayrollFactory.makeCommissionedClassification(itsSalary, itsRate);
     }
 }

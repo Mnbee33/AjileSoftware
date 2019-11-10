@@ -1,4 +1,4 @@
-package casestudy.Affiliations;
+package casestudy.PayrollFactoryImplementation;
 
 import casestudy.PayrollDomain.Affiliation;
 import casestudy.PayrollDomain.PayCheck;

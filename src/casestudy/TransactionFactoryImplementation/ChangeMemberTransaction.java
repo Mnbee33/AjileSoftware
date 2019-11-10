@@ -1,17 +1,17 @@
 package casestudy.TransactionFactoryImplementation;
 
-import casestudy.Affiliations.UnionAffiliation;
-import casestudy.GeneralTransactions.ChangeAffiliationTransaction;
+import casestudy.AbstractTransactions.ChangeAffiliationTransaction;
 import casestudy.PayrollDatabase.GlobalDatabase;
 import casestudy.PayrollDomain.Affiliation;
 import casestudy.PayrollDomain.Employee;
+import casestudy.PayrollFactory.PayrollFactory;
 
 public class ChangeMemberTransaction extends ChangeAffiliationTransaction {
     private int itsMemberId;
     private double itsDues;
 
-    public ChangeMemberTransaction(int empId, int memberId, double dues) {
-        super(empId);
+    public ChangeMemberTransaction(int empId, int memberId, double dues, PayrollFactory pf) {
+        super(empId, pf);
         itsMemberId = memberId;
         itsDues = dues;
     }
@@ -23,6 +23,6 @@ public class ChangeMemberTransaction extends ChangeAffiliationTransaction {
 
     @Override
     protected Affiliation getAffiliation() {
-        return new UnionAffiliation(itsMemberId, itsDues);
+        return itsPayrollFactory.makeUnionAffiliation(itsMemberId, itsDues);
     }
 }

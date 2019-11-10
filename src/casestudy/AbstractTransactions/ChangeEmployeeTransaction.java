@@ -1,14 +1,17 @@
-package casestudy.GeneralTransactions;
+package casestudy.AbstractTransactions;
 
 import casestudy.PayrollDatabase.GlobalDatabase;
 import casestudy.PayrollDomain.Employee;
+import casestudy.PayrollFactory.PayrollFactory;
 import casestudy.TransactionApplication.Transaction;
 
 public abstract class ChangeEmployeeTransaction implements Transaction {
     private int itsEmpId;
+    protected PayrollFactory itsPayrollFactory;
 
-    public ChangeEmployeeTransaction(int empId) {
+    public ChangeEmployeeTransaction(int empId, PayrollFactory pf) {
         itsEmpId = empId;
+        itsPayrollFactory = pf;
     }
 
     @Override

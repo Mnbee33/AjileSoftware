@@ -1,9 +1,8 @@
-package casestudy.TextParser;
+package casestudy.SourceFactoryImplementation;
 
 import casestudy.TransactionApplication.Transaction;
 import casestudy.TransactionApplication.TransactionSource;
 import casestudy.TransactionFactory.TransactionFactory;
-import casestudy.TransactionFactoryImplementation.PaydayTransaction;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -146,7 +145,7 @@ public class TextParserTransactionSource implements TransactionSource {
         }
     }
 
-    private PaydayTransaction payDay(String[] commands) {
+    private Transaction payDay(String[] commands) {
         LocalDate payDate = LocalDate.parse(commands[1]);
         return factory.makePaydayTransaction(payDate);
     }

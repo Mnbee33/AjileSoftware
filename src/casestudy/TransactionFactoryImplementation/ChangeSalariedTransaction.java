@@ -1,26 +1,25 @@
 package casestudy.TransactionFactoryImplementation;
 
-import casestudy.Classifications.SalariedClassification;
-import casestudy.GeneralTransactions.ChangeClassificationTransaction;
+import casestudy.AbstractTransactions.ChangeClassificationTransaction;
 import casestudy.PayrollDomain.PaymentClassification;
 import casestudy.PayrollDomain.PaymentSchedule;
-import casestudy.Schedules.MonthlySchedule;
+import casestudy.PayrollFactory.PayrollFactory;
 
 public class ChangeSalariedTransaction extends ChangeClassificationTransaction {
     private double itsSalary;
 
-    public ChangeSalariedTransaction(int empId, double salary) {
-        super(empId);
+    public ChangeSalariedTransaction(int empId, double salary, PayrollFactory pf) {
+        super(empId, pf);
         itsSalary = salary;
     }
 
     @Override
     protected PaymentSchedule getSchedule() {
-        return new MonthlySchedule();
+        return itsPayrollFactory.makeMonthlySchedule();
     }
 
     @Override
     protected PaymentClassification getClassification() {
-        return new SalariedClassification(itsSalary);
+        return itsPayrollFactory.makeSalariedClassification(itsSalary);
     }
 }

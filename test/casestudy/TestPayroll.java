@@ -1,17 +1,12 @@
 package casestudy;
 
-import casestudy.Affiliations.UnionAffiliation;
-import casestudy.Classifications.*;
-import casestudy.Methods.DirectMethod;
-import casestudy.Methods.HoldMethod;
-import casestudy.Methods.MailMethod;
 import casestudy.PayrollDatabase.GlobalDatabase;
 import casestudy.PayrollDatabaseImplementation.PayrollDatabaseImplementation;
 import casestudy.PayrollDomain.*;
-import casestudy.Schedules.BiweeklySchedule;
-import casestudy.Schedules.MonthlySchedule;
-import casestudy.Schedules.WeeklySchedule;
+import casestudy.PayrollFactory.PayrollFactory;
+import casestudy.PayrollFactoryImplementation.*;
 import casestudy.TransactionFactoryImplementation.*;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -20,6 +15,13 @@ import java.time.LocalDate;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class TestPayroll {
+    private static PayrollFactory pf;
+
+    @BeforeAll
+    static void beforeAll() {
+        pf = new PayrollFactoryImplementation();
+    }
+
     @BeforeEach
     void setUp() {
         GlobalDatabase.database = new PayrollDatabaseImplementation();
@@ -29,7 +31,7 @@ public class TestPayroll {
     @Test
     void testAddSalariedEmployee() {
         int empId = 1;
-        AddSalariedEmployee t = new AddSalariedEmployee(empId, "Bob", "Home", 1000.00);
+        AddSalariedEmployee t = new AddSalariedEmployee(empId, "Bob", "Home", 1000.00, pf);
         t.execute();
 
         Employee e = GlobalDatabase.database.getEmployee(empId);
@@ -53,7 +55,7 @@ public class TestPayroll {
     @Test
     void testAddHourlyEmployee() {
         int empId = 1;
-        AddHourlyEmployee t = new AddHourlyEmployee(empId, "Bob", "Home", 1000.00);
+        AddHourlyEmployee t = new AddHourlyEmployee(empId, "Bob", "Home", 1000.00, pf);
         t.execute();
 
         Employee e = GlobalDatabase.database.getEmployee(empId);
@@ -77,7 +79,8 @@ public class TestPayroll {
     @Test
     void testAddCommissionedEmployee() {
         int empId = 1;
-        AddCommissionedEmployee t = new AddCommissionedEmployee(empId, "Bob", "Home", 1000.00, 50.0);
+        AddCommissionedEmployee t = new AddCommissionedEmployee(
+                empId, "Bob", "Home", 1000.00, 50.0, pf);
         t.execute();
 
         Employee e = GlobalDatabase.database.getEmployee(empId);
@@ -102,7 +105,8 @@ public class TestPayroll {
     @Test
     void testDeleteEmployee() {
         int empId = 3;
-        AddCommissionedEmployee t = new AddCommissionedEmployee(empId, "Lance", "Home", 2500, 3.2);
+        AddCommissionedEmployee t = new AddCommissionedEmployee(
+                empId, "Lance", "Home", 2500, 3.2, pf);
         t.execute();
 
         Employee e = GlobalDatabase.database.getEmployee(empId);
@@ -118,7 +122,7 @@ public class TestPayroll {
     @Test
     void testTimeCardTransaction() {
         int empId = 2;
-        AddHourlyEmployee t = new AddHourlyEmployee(empId, "Bill", "Home", 15.25);
+        AddHourlyEmployee t = new AddHourlyEmployee(empId, "Bill", "Home", 15.25, pf);
         t.execute();
 
         LocalDate date = LocalDate.of(2001, 10, 31);
@@ -140,7 +144,8 @@ public class TestPayroll {
     @Test
     void testSalesReceiptTransaction() {
         int empId = 2;
-        AddCommissionedEmployee t = new AddCommissionedEmployee(empId, "Bill", "Home", 1000.00, 15.25);
+        AddCommissionedEmployee t = new AddCommissionedEmployee(
+                empId, "Bill", "Home", 1000.00, 15.25, pf);
         t.execute();
 
         LocalDate date = LocalDate.of(2001, 10, 31);
@@ -162,7 +167,7 @@ public class TestPayroll {
     @Test
     void testAddServiceCharge() {
         int empId = 2;
-        AddHourlyEmployee t = new AddHourlyEmployee(empId, "Bill", "Home", 15.25);
+        AddHourlyEmployee t = new AddHourlyEmployee(empId, "Bill", "Home", 15.25, pf);
         t.execute();
 
         LocalDate payDate = LocalDate.of(2001, 10, 31);
@@ -188,10 +193,10 @@ public class TestPayroll {
     @Test
     void testChangeNameTransaction() {
         int empId = 2;
-        AddHourlyEmployee t = new AddHourlyEmployee(empId, "Bill", "Home", 15.25);
+        AddHourlyEmployee t = new AddHourlyEmployee(empId, "Bill", "Home", 15.25, pf);
         t.execute();
 
-        ChangeNameTransaction cnt = new ChangeNameTransaction(empId, "Bob");
+        ChangeNameTransaction cnt = new ChangeNameTransaction(empId, "Bob", pf);
         cnt.execute();
 
         Employee e = GlobalDatabase.database.getEmployee(empId);
@@ -202,10 +207,10 @@ public class TestPayroll {
     @Test
     void testChangeAddressTransaction() {
         int empId = 2;
-        AddHourlyEmployee t = new AddHourlyEmployee(empId, "Bill", "Home", 15.25);
+        AddHourlyEmployee t = new AddHourlyEmployee(empId, "Bill", "Home", 15.25, pf);
         t.execute();
 
-        ChangeAddressTransaction cnt = new ChangeAddressTransaction(empId, "City");
+        ChangeAddressTransaction cnt = new ChangeAddressTransaction(empId, "City", pf);
         cnt.execute();
 
         Employee e = GlobalDatabase.database.getEmployee(empId);
@@ -216,10 +221,11 @@ public class TestPayroll {
     @Test
     void testChangeHourlyTransaction() {
         int empId = 3;
-        AddCommissionedEmployee t = new AddCommissionedEmployee(empId, "Lance", "Home", 2500, 3.2);
+        AddCommissionedEmployee t = new AddCommissionedEmployee(
+                empId, "Lance", "Home", 2500, 3.2, pf);
         t.execute();
 
-        ChangeHourlyTransaction cht = new ChangeHourlyTransaction(empId, 27.52);
+        ChangeHourlyTransaction cht = new ChangeHourlyTransaction(empId, 27.52, pf);
         cht.execute();
 
         Employee e = GlobalDatabase.database.getEmployee(empId);
@@ -238,10 +244,11 @@ public class TestPayroll {
     @Test
     void testChangeSalariedTransaction() {
         int empId = 3;
-        AddCommissionedEmployee t = new AddCommissionedEmployee(empId, "Lance", "Home", 2500, 3.2);
+        AddCommissionedEmployee t = new AddCommissionedEmployee(
+                empId, "Lance", "Home", 2500, 3.2, pf);
         t.execute();
 
-        ChangeSalariedTransaction cst = new ChangeSalariedTransaction(empId, 1000);
+        ChangeSalariedTransaction cst = new ChangeSalariedTransaction(empId, 1000, pf);
         cst.execute();
 
         Employee e = GlobalDatabase.database.getEmployee(empId);
@@ -260,10 +267,10 @@ public class TestPayroll {
     @Test
     void testChangeCommissionedTransaction() {
         int empId = 3;
-        AddHourlyEmployee t = new AddHourlyEmployee(empId, "Lance", "Home", 25.72);
+        AddHourlyEmployee t = new AddHourlyEmployee(empId, "Lance", "Home", 25.72, pf);
         t.execute();
 
-        ChangeCommissionedTransaction cct = new ChangeCommissionedTransaction(empId, 2000, 3.2);
+        ChangeCommissionedTransaction cct = new ChangeCommissionedTransaction(empId, 2000, 3.2, pf);
         cct.execute();
 
         Employee e = GlobalDatabase.database.getEmployee(empId);
@@ -283,10 +290,10 @@ public class TestPayroll {
     @Test
     void testChangeDirectTransaction() {
         int empId = 3;
-        AddHourlyEmployee t = new AddHourlyEmployee(empId, "Lance", "Home", 25.72);
+        AddHourlyEmployee t = new AddHourlyEmployee(empId, "Lance", "Home", 25.72, pf);
         t.execute();
 
-        ChangeDirectTransaction cdt = new ChangeDirectTransaction(empId, "bank", 10800);
+        ChangeDirectTransaction cdt = new ChangeDirectTransaction(empId, "bank", 10800, pf);
         cdt.execute();
 
         Employee e = GlobalDatabase.database.getEmployee(empId);
@@ -302,10 +309,10 @@ public class TestPayroll {
     @Test
     void testChangeMailTransaction() {
         int empId = 3;
-        AddHourlyEmployee t = new AddHourlyEmployee(empId, "Lance", "Home", 25.72);
+        AddHourlyEmployee t = new AddHourlyEmployee(empId, "Lance", "Home", 25.72, pf);
         t.execute();
 
-        ChangeMailTransaction cmt = new ChangeMailTransaction(empId, "mailAddress");
+        ChangeMailTransaction cmt = new ChangeMailTransaction(empId, "mailAddress", pf);
         cmt.execute();
 
         Employee e = GlobalDatabase.database.getEmployee(empId);
@@ -320,16 +327,16 @@ public class TestPayroll {
     @Test
     void testChangeHoldTransaction() {
         int empId = 3;
-        AddHourlyEmployee t = new AddHourlyEmployee(empId, "Lance", "Home", 25.72);
+        AddHourlyEmployee t = new AddHourlyEmployee(empId, "Lance", "Home", 25.72, pf);
         t.execute();
 
-        ChangeMailTransaction cmt = new ChangeMailTransaction(empId, "mailAddress");
+        ChangeMailTransaction cmt = new ChangeMailTransaction(empId, "mailAddress", pf);
         cmt.execute();
         Employee e = GlobalDatabase.database.getEmployee(empId);
         assertNotNull(e);
         assertTrue(e.getMethod() instanceof MailMethod);
 
-        ChangeHoldTransaction cht = new ChangeHoldTransaction(empId);
+        ChangeHoldTransaction cht = new ChangeHoldTransaction(empId, pf);
         cht.execute();
 
         e = GlobalDatabase.database.getEmployee(empId);
@@ -344,10 +351,10 @@ public class TestPayroll {
     void testChangeMemberTransaction() {
         int empId = 2;
         int memberId = 7734;
-        AddHourlyEmployee t = new AddHourlyEmployee(empId, "Bill", "Home", 15.25);
+        AddHourlyEmployee t = new AddHourlyEmployee(empId, "Bill", "Home", 15.25, pf);
         t.execute();
 
-        ChangeMemberTransaction cmt = new ChangeMemberTransaction(empId, memberId, 99.42);
+        ChangeMemberTransaction cmt = new ChangeMemberTransaction(empId, memberId, 99.42, pf);
         cmt.execute();
 
         Employee e = GlobalDatabase.database.getEmployee(empId);
@@ -367,10 +374,10 @@ public class TestPayroll {
     void testChangeUnaffiliatedTransaction() {
         int empId = 2;
         int memberId = 7734;
-        AddHourlyEmployee t = new AddHourlyEmployee(empId, "Bill", "Home", 15.25);
+        AddHourlyEmployee t = new AddHourlyEmployee(empId, "Bill", "Home", 15.25, pf);
         t.execute();
 
-        ChangeMemberTransaction cmt = new ChangeMemberTransaction(empId, memberId, 99.42);
+        ChangeMemberTransaction cmt = new ChangeMemberTransaction(empId, memberId, 99.42, pf);
         cmt.execute();
 
         Employee e = GlobalDatabase.database.getEmployee(empId);
@@ -384,23 +391,21 @@ public class TestPayroll {
         Employee member = GlobalDatabase.database.getUnionMember(memberId);
         assertEquals(e, member);
 
-        ChangeUnaffiliatedTransaction cut = new ChangeUnaffiliatedTransaction(empId);
+        ChangeUnaffiliatedTransaction cut = new ChangeUnaffiliatedTransaction(empId, pf);
         cut.execute();
 
-        af = e.getAffiliation();
-        NoAffiliation na = (NoAffiliation) af;
-        member = GlobalDatabase.database.getUnionMember(memberId);
-        assertEquals(na, member);
+        NoAffiliation na = (NoAffiliation) e.getAffiliation();
+        assertNotNull(na);
     }
 
     @Test
     void testPaySingleSalariedEmployee() {
         int empId = 1;
-        AddSalariedEmployee t = new AddSalariedEmployee(empId, "Bob", "Home", 1000.0);
+        AddSalariedEmployee t = new AddSalariedEmployee(empId, "Bob", "Home", 1000.0, pf);
         t.execute();
 
         LocalDate payDate = LocalDate.of(2001, 11, 30);
-        PaydayTransaction pt = new PaydayTransaction(payDate);
+        PaydayTransaction pt = new PaydayTransaction(payDate, pf);
         pt.execute();
 
         validatePayCheck(pt, empId, payDate, 1000.0);
@@ -409,11 +414,11 @@ public class TestPayroll {
     @Test
     void testPaySingleSalariedEmployeeOnWrongDate() {
         int empId = 1;
-        AddSalariedEmployee t = new AddSalariedEmployee(empId, "Bob", "Home", 1000.0);
+        AddSalariedEmployee t = new AddSalariedEmployee(empId, "Bob", "Home", 1000.0, pf);
         t.execute();
 
         LocalDate payDate = LocalDate.of(2001, 11, 29);
-        PaydayTransaction pt = new PaydayTransaction(payDate);
+        PaydayTransaction pt = new PaydayTransaction(payDate, pf);
         pt.execute();
 
         PayCheck pc = pt.getPayCheck(empId);
@@ -423,11 +428,11 @@ public class TestPayroll {
     @Test
     void testPaySingleHourlyEmployeeNoTimeCards() {
         int empId = 2;
-        AddHourlyEmployee t = new AddHourlyEmployee(empId, "Bill", "Home", 15.25);
+        AddHourlyEmployee t = new AddHourlyEmployee(empId, "Bill", "Home", 15.25, pf);
         t.execute();
 
         LocalDate payDate = LocalDate.of(2001, 11, 9);
-        PaydayTransaction pt = new PaydayTransaction(payDate);
+        PaydayTransaction pt = new PaydayTransaction(payDate, pf);
         pt.execute();
 
         validatePayCheck(pt, empId, payDate, 0.0);
@@ -436,14 +441,14 @@ public class TestPayroll {
     @Test
     void testPaySingleHourlyEmployeeOneTimeCard() {
         int empId = 2;
-        AddHourlyEmployee t = new AddHourlyEmployee(empId, "Bill", "Home", 15.25);
+        AddHourlyEmployee t = new AddHourlyEmployee(empId, "Bill", "Home", 15.25, pf);
         t.execute();
 
         LocalDate payDate = LocalDate.of(2001, 11, 9);
         TimeCardTransaction tc = new TimeCardTransaction(payDate, 2.0, empId);
         tc.execute();
 
-        PaydayTransaction pt = new PaydayTransaction(payDate);
+        PaydayTransaction pt = new PaydayTransaction(payDate, pf);
         pt.execute();
 
         validatePayCheck(pt, empId, payDate, 30.5);
@@ -452,14 +457,14 @@ public class TestPayroll {
     @Test
     void testPaySingleHourlyEmployeeOverOneTimeCard() {
         int empId = 2;
-        AddHourlyEmployee t = new AddHourlyEmployee(empId, "Bill", "Home", 15.25);
+        AddHourlyEmployee t = new AddHourlyEmployee(empId, "Bill", "Home", 15.25, pf);
         t.execute();
 
         LocalDate payDate = LocalDate.of(2001, 11, 9);
         TimeCardTransaction tc = new TimeCardTransaction(payDate, 9.0, empId);
         tc.execute();
 
-        PaydayTransaction pt = new PaydayTransaction(payDate);
+        PaydayTransaction pt = new PaydayTransaction(payDate, pf);
         pt.execute();
 
         validatePayCheck(pt, empId, payDate, (8 + 1.5) * 15.25);
@@ -468,14 +473,14 @@ public class TestPayroll {
     @Test
     void testPaySingleHourlyEmployeeOnWrongDate() {
         int empId = 2;
-        AddHourlyEmployee t = new AddHourlyEmployee(empId, "Bill", "Home", 15.25);
+        AddHourlyEmployee t = new AddHourlyEmployee(empId, "Bill", "Home", 15.25, pf);
         t.execute();
 
         LocalDate payDate = LocalDate.of(2001, 11, 8);
         TimeCardTransaction tc = new TimeCardTransaction(payDate, 9.0, empId);
         tc.execute();
 
-        PaydayTransaction pt = new PaydayTransaction(payDate);
+        PaydayTransaction pt = new PaydayTransaction(payDate, pf);
         pt.execute();
 
         PayCheck pc = pt.getPayCheck(empId);
@@ -485,7 +490,7 @@ public class TestPayroll {
     @Test
     void testPaySingleHourlyEmployeeTwoTimeCards() {
         int empId = 2;
-        AddHourlyEmployee t = new AddHourlyEmployee(empId, "Bill", "Home", 15.25);
+        AddHourlyEmployee t = new AddHourlyEmployee(empId, "Bill", "Home", 15.25, pf);
         t.execute();
 
         LocalDate payDate = LocalDate.of(2001, 11, 9);
@@ -496,7 +501,7 @@ public class TestPayroll {
         TimeCardTransaction tc2 = new TimeCardTransaction(payDate2, 5.0, empId);
         tc2.execute();
 
-        PaydayTransaction pt = new PaydayTransaction(payDate);
+        PaydayTransaction pt = new PaydayTransaction(payDate, pf);
         pt.execute();
 
         validatePayCheck(pt, empId, payDate, 7 * 15.25);
@@ -505,7 +510,7 @@ public class TestPayroll {
     @Test
     void testPaySingleHourlyEmployeeWithTimeCardsSpanningTwoPayPeriod() {
         int empId = 2;
-        AddHourlyEmployee t = new AddHourlyEmployee(empId, "Bill", "Home", 15.25);
+        AddHourlyEmployee t = new AddHourlyEmployee(empId, "Bill", "Home", 15.25, pf);
         t.execute();
 
         LocalDate payDate = LocalDate.of(2001, 11, 9);
@@ -517,7 +522,7 @@ public class TestPayroll {
         TimeCardTransaction tc2 = new TimeCardTransaction(dateInPreviousPayPeriod, 5.0, empId);
         tc2.execute();
 
-        PaydayTransaction pt = new PaydayTransaction(payDate);
+        PaydayTransaction pt = new PaydayTransaction(payDate, pf);
         pt.execute();
 
         validatePayCheck(pt, empId, payDate, 2 * 15.25);
@@ -526,12 +531,13 @@ public class TestPayroll {
     @Test
     void testPayCommissionedEmployeeNoSalesReceipts() {
         int empId = 2;
-        AddCommissionedEmployee t = new AddCommissionedEmployee(empId, "Lance", "Home", 2500, 3.2);
+        AddCommissionedEmployee t = new AddCommissionedEmployee(
+                empId, "Lance", "Home", 2500, 3.2, pf);
         t.execute();
 
         LocalDate payDate = LocalDate.of(2001, 11, 9);
 
-        PaydayTransaction pt = new PaydayTransaction(payDate);
+        PaydayTransaction pt = new PaydayTransaction(payDate, pf);
         pt.execute();
 
         validatePayCheck(pt, empId, payDate, 2500);
@@ -540,7 +546,8 @@ public class TestPayroll {
     @Test
     void testPayCommissionedEmployeeOneSalesReceipt() {
         int empId = 2;
-        AddCommissionedEmployee t = new AddCommissionedEmployee(empId, "Lance", "Home", 2500, 3.2);
+        AddCommissionedEmployee t = new AddCommissionedEmployee(
+                empId, "Lance", "Home", 2500, 3.2, pf);
         t.execute();
 
         LocalDate payDate = LocalDate.of(2001, 11, 9);
@@ -548,7 +555,7 @@ public class TestPayroll {
         SalesReceiptTransaction srt = new SalesReceiptTransaction(payDate, 8.0, empId);
         srt.execute();
 
-        PaydayTransaction pt = new PaydayTransaction(payDate);
+        PaydayTransaction pt = new PaydayTransaction(payDate, pf);
         pt.execute();
 
         validatePayCheck(pt, empId, payDate, 2500 + 8.0 * 3.2);
@@ -557,7 +564,8 @@ public class TestPayroll {
     @Test
     void testPayCommissionedEmployeeTwoSalesReceipt() {
         int empId = 2;
-        AddCommissionedEmployee t = new AddCommissionedEmployee(empId, "Lance", "Home", 2500, 3.2);
+        AddCommissionedEmployee t = new AddCommissionedEmployee(
+                empId, "Lance", "Home", 2500, 3.2, pf);
         t.execute();
 
         LocalDate payDate = LocalDate.of(2001, 11, 9);
@@ -568,7 +576,7 @@ public class TestPayroll {
                 LocalDate.of(2001, 11, 8), 7.0, empId);
         srt2.execute();
 
-        PaydayTransaction pt = new PaydayTransaction(payDate);
+        PaydayTransaction pt = new PaydayTransaction(payDate, pf);
         pt.execute();
 
         validatePayCheck(pt, empId, payDate, 2500 + ((8.0 + 7.0) * 3.2));
@@ -577,14 +585,15 @@ public class TestPayroll {
     @Test
     void testPayCommissionedEmployeeOnWrongDate() {
         int empId = 2;
-        AddCommissionedEmployee t = new AddCommissionedEmployee(empId, "Lance", "Home", 2500, 3.2);
+        AddCommissionedEmployee t = new AddCommissionedEmployee(
+                empId, "Lance", "Home", 2500, 3.2, pf);
         t.execute();
 
         LocalDate payDate = LocalDate.of(2001, 11, 16);
         SalesReceiptTransaction srt = new SalesReceiptTransaction(payDate, 8.0, empId);
         srt.execute();
 
-        PaydayTransaction pt = new PaydayTransaction(payDate);
+        PaydayTransaction pt = new PaydayTransaction(payDate, pf);
         pt.execute();
 
         PayCheck pc = pt.getPayCheck(empId);
@@ -594,7 +603,8 @@ public class TestPayroll {
     @Test
     void testPayCommissionedEmployeeMultiSalesReceipts() {
         int empId = 2;
-        AddCommissionedEmployee t = new AddCommissionedEmployee(empId, "Lance", "Home", 2500, 3.2);
+        AddCommissionedEmployee t = new AddCommissionedEmployee(
+                empId, "Lance", "Home", 2500, 3.2, pf);
         t.execute();
 
         LocalDate payDate = LocalDate.of(2001, 11, 9);
@@ -609,7 +619,7 @@ public class TestPayroll {
                 LocalDate.of(2001, 12, 10), 6.0, empId);
         srt3.execute();
 
-        PaydayTransaction pt = new PaydayTransaction(payDate);
+        PaydayTransaction pt = new PaydayTransaction(payDate, pf);
         pt.execute();
 
         validatePayCheck(pt, empId, payDate, 2500 + (8.0 * 3.2));
@@ -618,16 +628,16 @@ public class TestPayroll {
     @Test
     void testSalariedUnionMemberDues() {
         int empId = 1;
-        AddSalariedEmployee t = new AddSalariedEmployee(empId, "Bob", "Home", 1000.0);
+        AddSalariedEmployee t = new AddSalariedEmployee(empId, "Bob", "Home", 1000.0, pf);
         t.execute();
 
         int memberId = 7734;
-        ChangeMemberTransaction cmt = new ChangeMemberTransaction(empId, memberId, 9.42);
+        ChangeMemberTransaction cmt = new ChangeMemberTransaction(empId, memberId, 9.42, pf);
         cmt.execute();
 
         LocalDate payDate = LocalDate.of(2001, 11, 30);
         int fridays = 5;    // 2001年11月に金曜日は5日あった
-        PaydayTransaction pt = new PaydayTransaction(payDate);
+        PaydayTransaction pt = new PaydayTransaction(payDate, pf);
         pt.execute();
 
         PayCheck pc = pt.getPayCheck(empId);
@@ -642,11 +652,11 @@ public class TestPayroll {
     @Test
     void testHourlyUnionMemberServiceCharge() {
         int empId = 1;
-        AddHourlyEmployee t = new AddHourlyEmployee(empId, "Bill", "Home", 15.24);
+        AddHourlyEmployee t = new AddHourlyEmployee(empId, "Bill", "Home", 15.24, pf);
         t.execute();
 
         int memberId = 7734;
-        ChangeMemberTransaction cmt = new ChangeMemberTransaction(empId, memberId, 9.42);
+        ChangeMemberTransaction cmt = new ChangeMemberTransaction(empId, memberId, 9.42, pf);
         cmt.execute();
 
         LocalDate payDate = LocalDate.of(2001, 11, 9);
@@ -656,7 +666,7 @@ public class TestPayroll {
         TimeCardTransaction tct = new TimeCardTransaction(payDate, 8.0, empId);
         tct.execute();
 
-        PaydayTransaction pt = new PaydayTransaction(payDate);
+        PaydayTransaction pt = new PaydayTransaction(payDate, pf);
         pt.execute();
 
         PayCheck pc = pt.getPayCheck(empId);
@@ -671,11 +681,11 @@ public class TestPayroll {
     @Test
     void testServiceChargesSpanningMultiplePayPeriod() {
         int empId = 1;
-        AddHourlyEmployee t = new AddHourlyEmployee(empId, "Bill", "Home", 15.24);
+        AddHourlyEmployee t = new AddHourlyEmployee(empId, "Bill", "Home", 15.24, pf);
         t.execute();
 
         int memberId = 7734;
-        ChangeMemberTransaction cmt = new ChangeMemberTransaction(empId, memberId, 9.42);
+        ChangeMemberTransaction cmt = new ChangeMemberTransaction(empId, memberId, 9.42, pf);
         cmt.execute();
 
         LocalDate earlyDate = LocalDate.of(2001, 11, 2); // 前の金曜日
@@ -694,7 +704,7 @@ public class TestPayroll {
         TimeCardTransaction tct = new TimeCardTransaction(payDate, 8.0, empId);
         tct.execute();
 
-        PaydayTransaction pt = new PaydayTransaction(payDate);
+        PaydayTransaction pt = new PaydayTransaction(payDate, pf);
         pt.execute();
 
         PayCheck pc = pt.getPayCheck(empId);

@@ -1,12 +1,12 @@
-package casestudy.Classifications;
+package casestudy.PayrollFactoryImplementation;
 
 import java.time.LocalDate;
 
-public class SalesReceipt {
+public class ServiceCharge {
     private LocalDate itsDate;
     private double itsAmount;
 
-    public SalesReceipt(LocalDate date, double amount) {
+    public ServiceCharge(LocalDate date, double amount) {
         itsDate = date;
         itsAmount = amount;
     }

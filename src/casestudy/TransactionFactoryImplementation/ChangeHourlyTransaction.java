@@ -1,26 +1,25 @@
 package casestudy.TransactionFactoryImplementation;
 
-import casestudy.Classifications.HourlyClassification;
-import casestudy.GeneralTransactions.ChangeClassificationTransaction;
+import casestudy.AbstractTransactions.ChangeClassificationTransaction;
 import casestudy.PayrollDomain.PaymentClassification;
 import casestudy.PayrollDomain.PaymentSchedule;
-import casestudy.Schedules.WeeklySchedule;
+import casestudy.PayrollFactory.PayrollFactory;
 
 public class ChangeHourlyTransaction extends ChangeClassificationTransaction {
     private double itsRate;
 
-    public ChangeHourlyTransaction(int empId, double rate) {
-        super(empId);
+    public ChangeHourlyTransaction(int empId, double rate, PayrollFactory pf) {
+        super(empId, pf);
         itsRate = rate;
     }
 
     @Override
     protected PaymentSchedule getSchedule() {
-        return new WeeklySchedule();
+        return itsPayrollFactory.makeWeeklySchedule();
     }
 
     @Override
     protected PaymentClassification getClassification() {
-        return new HourlyClassification(itsRate);
+        return itsPayrollFactory.makeHourlyClassification(itsRate);
     }
 }

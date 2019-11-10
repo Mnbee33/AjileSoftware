@@ -1,19 +1,19 @@
 package casestudy.TransactionFactoryImplementation;
 
-import casestudy.GeneralTransactions.ChangeMethodTransaction;
-import casestudy.Methods.MailMethod;
+import casestudy.AbstractTransactions.ChangeMethodTransaction;
 import casestudy.PayrollDomain.PaymentMethod;
+import casestudy.PayrollFactory.PayrollFactory;
 
 public class ChangeMailTransaction extends ChangeMethodTransaction {
     private String itsAddress;
 
-    public ChangeMailTransaction(int empId, String address) {
-        super(empId);
+    public ChangeMailTransaction(int empId, String address, PayrollFactory pf) {
+        super(empId, pf);
         itsAddress = address;
     }
 
     @Override
     protected PaymentMethod getMethod() {
-        return new MailMethod(itsAddress);
+        return itsPayrollFactory.makeMailMethod(itsAddress);
     }
 }

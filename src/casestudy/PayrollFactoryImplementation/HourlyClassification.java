@@ -1,4 +1,4 @@
-package casestudy.Classifications;
+package casestudy.PayrollFactoryImplementation;
 
 import casestudy.PayrollDomain.PayCheck;
 import casestudy.PayrollDomain.PaymentClassification;

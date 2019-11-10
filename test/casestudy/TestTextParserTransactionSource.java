@@ -1,15 +1,12 @@
 package casestudy;
 
-import casestudy.Affiliations.UnionAffiliation;
-import casestudy.Classifications.*;
-import casestudy.Methods.DirectMethod;
-import casestudy.Methods.HoldMethod;
-import casestudy.Methods.MailMethod;
-import casestudy.PayrollApplication.PayrollApplication;
+import casestudy.PayApplication.PayrollApplication;
 import casestudy.PayrollDatabase.GlobalDatabase;
 import casestudy.PayrollDatabaseImplementation.PayrollDatabaseImplementation;
 import casestudy.PayrollDomain.Employee;
-import casestudy.TextParser.TextParserTransactionSource;
+import casestudy.PayrollFactory.PayrollFactory;
+import casestudy.PayrollFactoryImplementation.*;
+import casestudy.SourceFactoryImplementation.TextParserTransactionSource;
 import casestudy.TransactionApplication.Transaction;
 import casestudy.TransactionApplication.TransactionSource;
 import casestudy.TransactionFactory.TransactionFactory;
@@ -26,12 +23,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class TestTextParserTransactionSource {
     private PayrollApplication application;
-    private static TransactionFactory factory;
 
     @BeforeAll
     static void beforeAll() {
         GlobalDatabase.database = new PayrollDatabaseImplementation();
-        factory = new TransactionFactoryImplementation();
     }
 
     @BeforeEach
@@ -42,8 +37,7 @@ public class TestTextParserTransactionSource {
 
     @Test
     void testAddEmp() {
-        TransactionSource addEmp = new TextParserTransactionSource("test/casestudy/src/AddEmp.txt", factory);
-        application.setSource(addEmp);
+        application.setSource("test/casestudy/src/AddEmp.txt");
         application.execute();
 
         Employee e1 = GlobalDatabase.database.getEmployee(1);
@@ -64,14 +58,12 @@ public class TestTextParserTransactionSource {
 
     @Test
     void testDelEmp() {
-        TransactionSource addEmp = new TextParserTransactionSource("test/casestudy/src/AddEmp.txt", factory);
-        application.setSource(addEmp);
+        application.setSource("test/casestudy/src/AddEmp.txt");
         application.execute();
         Employee e = GlobalDatabase.database.getEmployee(1);
         assertNotNull(e);
 
-        TransactionSource delEmp = new TextParserTransactionSource("test/casestudy/src/DelEmp.txt", factory);
-        application.setSource(delEmp);
+        application.setSource("test/casestudy/src/DelEmp.txt");
         application.execute();
         e = GlobalDatabase.database.getEmployee(1);
         assertNull(e);
@@ -79,12 +71,10 @@ public class TestTextParserTransactionSource {
 
     @Test
     void testTimeCard() {
-        TransactionSource addEmp = new TextParserTransactionSource("test/casestudy/src/AddEmp.txt", factory);
-        application.setSource(addEmp);
+        application.setSource("test/casestudy/src/AddEmp.txt");
         application.execute();
 
-        TransactionSource timeCard = new TextParserTransactionSource("test/casestudy/src/TimeCard.txt", factory);
-        application.setSource(timeCard);
+        application.setSource("test/casestudy/src/TimeCard.txt");
         application.execute();
 
         Employee e = GlobalDatabase.database.getEmployee(1);
@@ -97,12 +87,10 @@ public class TestTextParserTransactionSource {
 
     @Test
     void testSalesReceipt() {
-        TransactionSource addEmp = new TextParserTransactionSource("test/casestudy/src/AddEmp.txt", factory);
-        application.setSource(addEmp);
+        application.setSource("test/casestudy/src/AddEmp.txt");
         application.execute();
 
-        TransactionSource saleReceipt = new TextParserTransactionSource("test/casestudy/src/SalesReceipt.txt", factory);
-        application.setSource(saleReceipt);
+        application.setSource("test/casestudy/src/SalesReceipt.txt");
         application.execute();
 
         Employee e = GlobalDatabase.database.getEmployee(3);
@@ -115,8 +103,7 @@ public class TestTextParserTransactionSource {
 
     @Test
     void testServiceCharge() {
-        TransactionSource addEmp = new TextParserTransactionSource("test/casestudy/src/AddEmp.txt", factory);
-        application.setSource(addEmp);
+        application.setSource("test/casestudy/src/AddEmp.txt");
         application.execute();
 
         Employee e = GlobalDatabase.database.getEmployee(1);
@@ -126,8 +113,7 @@ public class TestTextParserTransactionSource {
         e.setAffiliation(new UnionAffiliation(memberId, 8.0));
         GlobalDatabase.database.addUnionMember(memberId, e);
 
-        TransactionSource serviceCharge = new TextParserTransactionSource("test/casestudy/src/ServiceCharge.txt", factory);
-        application.setSource(serviceCharge);
+        application.setSource("test/casestudy/src/ServiceCharge.txt");
         application.execute();
 
         UnionAffiliation uf = (UnionAffiliation) e.getAffiliation();
@@ -137,12 +123,10 @@ public class TestTextParserTransactionSource {
 
     @Test
     void testChgEmp() {
-        TransactionSource addEmp = new TextParserTransactionSource("test/casestudy/src/AddEmp.txt", factory);
-        application.setSource(addEmp);
+        application.setSource("test/casestudy/src/AddEmp.txt");
         application.execute();
 
-        TransactionSource serviceCharge = new TextParserTransactionSource("test/casestudy/src/ChgEmp.txt", factory);
-        application.setSource(serviceCharge);
+        application.setSource("test/casestudy/src/ChgEmp.txt");
         application.execute();
 
         Employee e1 = GlobalDatabase.database.getEmployee(1);
@@ -168,23 +152,20 @@ public class TestTextParserTransactionSource {
 
     @Test
     void testPayday() {
-        TransactionSource addEmp = new TextParserTransactionSource("test/casestudy/src/AddEmp.txt", factory);
-        application.setSource(addEmp);
+        application.setSource("test/casestudy/src/AddEmp.txt");
         application.execute();
 
-        TransactionSource payDay = new TextParserTransactionSource("test/casestudy/src/Payday.txt", factory);
+        PayrollFactory pf = new PayrollFactoryImplementation();
+        TransactionFactory tf = new TransactionFactoryImplementation(pf);
+        TransactionSource payDay = new TextParserTransactionSource("test/casestudy/src/Payday.txt", tf);
         List<Transaction> transactions = payDay.getTransactions();
         assertEquals(1, transactions.size());
         assertTrue(transactions.get(0) instanceof PaydayTransaction);
-
-        application.setSource(payDay);
-        application.execute();
     }
 
     @Test
     void testMultipleCommand() {
-        TransactionSource multi = new TextParserTransactionSource("test/casestudy/src/Multi.txt", factory);
-        application.setSource(multi);
+        application.setSource("test/casestudy/src/Multi.txt");
         application.execute();
 
         Employee e = GlobalDatabase.database.getEmployee(1);

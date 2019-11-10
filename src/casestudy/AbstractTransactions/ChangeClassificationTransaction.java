@@ -1,13 +1,13 @@
-package casestudy.GeneralTransactions;
+package casestudy.AbstractTransactions;
 
 import casestudy.PayrollDomain.Employee;
 import casestudy.PayrollDomain.PaymentClassification;
 import casestudy.PayrollDomain.PaymentSchedule;
+import casestudy.PayrollFactory.PayrollFactory;
 
 public abstract class ChangeClassificationTransaction extends ChangeEmployeeTransaction {
-
-    public ChangeClassificationTransaction(int empId) {
-        super(empId);
+    public ChangeClassificationTransaction(int empId, PayrollFactory pf) {
+        super(empId, pf);
     }
 
     @Override

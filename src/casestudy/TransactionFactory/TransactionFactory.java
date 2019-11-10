@@ -1,44 +1,44 @@
 package casestudy.TransactionFactory;
 
-import casestudy.TransactionFactoryImplementation.*;
+import casestudy.TransactionApplication.Transaction;
 
 import java.time.LocalDate;
 
 public interface TransactionFactory {
 
-    AddCommissionedEmployee makeAddCommissionedEmployee(int empId, String name, String address, double salary, double commissionRate);
+    Transaction makeAddCommissionedEmployee(int empId, String name, String address, double salary, double commissionRate);
 
-    AddHourlyEmployee makeAddHourlyEmployee(int empId, String name, String address, double hourlyRate);
+    Transaction makeAddHourlyEmployee(int empId, String name, String address, double hourlyRate);
 
-    AddSalariedEmployee makeAddSalariedEmployee(int empId, String name, String address, double salary);
+    Transaction makeAddSalariedEmployee(int empId, String name, String address, double salary);
 
-    ChangeAddressTransaction makeChangeAddressTransaction(int empId, String address);
+    Transaction makeChangeAddressTransaction(int empId, String address);
 
-    ChangeCommissionedTransaction makeChangeCommissionedTransaction(int empId, double salary, double rate);
+    Transaction makeChangeHoldTransaction(int empId);
 
-    ChangeDirectTransaction makeChangeDirectTransaction(int empId, String bank, long account);
+    Transaction makeChangeDirectTransaction(int empId, String bank, long account);
 
-    ChangeHoldTransaction makeChangeHoldTransaction(int empId);
+    Transaction makeChangeMailTransaction(int empId, String address);
 
-    ChangeHourlyTransaction makeChangeHourlyTransaction(int empId, double rate);
+    Transaction makeChangeNameTransaction(int empId, String name);
 
-    ChangeMailTransaction makeChangeMailTransaction(int empId, String address);
+    Transaction makeChangeHourlyTransaction(int empId, double rate);
 
-    ChangeMemberTransaction makeChangeMemberTransaction(int empId, int memberId, double dues);
+    Transaction makeChangeSalariedTransaction(int empId, double salary);
 
-    ChangeNameTransaction makeChangeNameTransaction(int empId, String name);
+    Transaction makeChangeCommissionedTransaction(int empId, double salary, double rate);
 
-    ChangeSalariedTransaction makeChangeSalariedTransaction(int empId, double salary);
+    Transaction makeChangeMemberTransaction(int empId, int memberId, double dues);
 
-    ChangeUnaffiliatedTransaction makeChangeUnaffiliatedTransaction(int empId);
+    Transaction makeChangeUnaffiliatedTransaction(int empId);
 
-    DeleteEmployeeTransaction makeDeleteEmployeeTransaction(int empId);
+    Transaction makeDeleteEmployeeTransaction(int empId);
 
-    PaydayTransaction makePaydayTransaction(LocalDate payDate);
+    Transaction makePaydayTransaction(LocalDate payDate);
 
-    SalesReceiptTransaction makeSalesReceiptTransaction(LocalDate date, double amount, int empId);
+    Transaction makeSalesReceiptTransaction(LocalDate date, double amount, int empId);
 
-    ServiceChargeTransaction makeServiceChargeTransaction(int memberId, LocalDate date, double amount);
+    Transaction makeServiceChargeTransaction(int memberId, LocalDate date, double amount);
 
-    TimeCardTransaction makeTimeCardTransaction(LocalDate date, double hours, int empId);
+    Transaction makeTimeCardTransaction(LocalDate date, double hours, int empId);
 }

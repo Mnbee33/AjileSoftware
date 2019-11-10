@@ -1,11 +1,12 @@
-package casestudy.GeneralTransactions;
+package casestudy.AbstractTransactions;
 
 import casestudy.PayrollDomain.Affiliation;
 import casestudy.PayrollDomain.Employee;
+import casestudy.PayrollFactory.PayrollFactory;
 
 public abstract class ChangeAffiliationTransaction extends ChangeEmployeeTransaction {
-    public ChangeAffiliationTransaction(int empId) {
-        super(empId);
+    public ChangeAffiliationTransaction(int empId, PayrollFactory pf) {
+        super(empId, pf);
     }
 
     @Override
