@@ -3,7 +3,7 @@ package casestudy.Affiliations;
 import casestudy.PayrollDatabase.PayrollDatabase;
 import casestudy.PayrollDomain.Affiliation;
 import casestudy.PayrollDomain.Employee;
-import casestudy.PayrollDomain.Transaction;
+import casestudy.TransactionApplication.Transaction;
 
 import java.time.LocalDate;
 

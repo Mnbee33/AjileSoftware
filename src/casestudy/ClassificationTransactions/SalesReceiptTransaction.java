@@ -1,9 +1,11 @@
-package casestudy.Classifications;
+package casestudy.ClassificationTransactions;
 
+import casestudy.Classifications.CommissionedClassification;
+import casestudy.Classifications.SalesReceipt;
 import casestudy.PayrollDatabase.PayrollDatabase;
 import casestudy.PayrollDomain.Employee;
 import casestudy.PayrollDomain.PaymentClassification;
-import casestudy.PayrollDomain.Transaction;
+import casestudy.TransactionApplication.Transaction;
 
 import java.time.LocalDate;
 

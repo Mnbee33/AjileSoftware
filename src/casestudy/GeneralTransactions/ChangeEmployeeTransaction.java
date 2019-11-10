@@ -1,8 +1,8 @@
-package casestudy.Methods;
+package casestudy.GeneralTransactions;
 
 import casestudy.PayrollDatabase.PayrollDatabase;
 import casestudy.PayrollDomain.Employee;
-import casestudy.PayrollDomain.Transaction;
+import casestudy.TransactionApplication.Transaction;
 
 public abstract class ChangeEmployeeTransaction implements Transaction {
     private int itsEmpId;

@@ -1,5 +1,6 @@
-package casestudy.Methods;
+package casestudy.MethodTransactions;
 
+import casestudy.Methods.MailMethod;
 import casestudy.PayrollDomain.PaymentMethod;
 
 public class ChangeMailTransaction extends ChangeMethodTransaction {

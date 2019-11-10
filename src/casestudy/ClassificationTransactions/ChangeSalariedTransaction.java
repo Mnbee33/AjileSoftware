@@ -1,5 +1,6 @@
-package casestudy.Classifications;
+package casestudy.ClassificationTransactions;
 
+import casestudy.Classifications.SalariedClassification;
 import casestudy.PayrollDomain.PaymentClassification;
 import casestudy.PayrollDomain.PaymentSchedule;
 import casestudy.Schedules.MonthlySchedule;

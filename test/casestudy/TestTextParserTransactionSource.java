@@ -7,11 +7,11 @@ import casestudy.Methods.HoldMethod;
 import casestudy.Methods.MailMethod;
 import casestudy.Payment.PaydayTransaction;
 import casestudy.PayrollApplication.PayrollApplication;
-import casestudy.PayrollApplication.TransactionSource;
 import casestudy.PayrollDatabase.PayrollDatabase;
 import casestudy.PayrollDomain.Employee;
-import casestudy.PayrollDomain.Transaction;
 import casestudy.TextParser.TextParserTransactionSource;
+import casestudy.TransactionApplication.Transaction;
+import casestudy.TransactionApplication.TransactionSource;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

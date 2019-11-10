@@ -1,6 +1,6 @@
-package casestudy.Classifications;
+package casestudy.ClassificationTransactions;
 
-import casestudy.Methods.ChangeEmployeeTransaction;
+import casestudy.GeneralTransactions.ChangeEmployeeTransaction;
 import casestudy.PayrollDomain.Employee;
 import casestudy.PayrollDomain.PaymentClassification;
 import casestudy.PayrollDomain.PaymentSchedule;

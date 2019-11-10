@@ -1,14 +1,17 @@
 package casestudy;
 
 import casestudy.Affiliations.*;
+import casestudy.ClassificationTransactions.*;
 import casestudy.Classifications.*;
-import casestudy.EmployeeAttribute.ChangeAddressTransaction;
-import casestudy.EmployeeAttribute.ChangeNameTransaction;
-import casestudy.Methods.*;
-import casestudy.OperationEmployee.AddCommissionedEmployee;
-import casestudy.OperationEmployee.AddHourlyEmployee;
-import casestudy.OperationEmployee.AddSalariedEmployee;
-import casestudy.OperationEmployee.DeleteEmployeeTransaction;
+import casestudy.EmployeeAttributeTransactions.ChangeAddressTransaction;
+import casestudy.EmployeeAttributeTransactions.ChangeNameTransaction;
+import casestudy.GeneralTransactions.DeleteEmployeeTransaction;
+import casestudy.MethodTransactions.ChangeDirectTransaction;
+import casestudy.MethodTransactions.ChangeHoldTransaction;
+import casestudy.MethodTransactions.ChangeMailTransaction;
+import casestudy.Methods.DirectMethod;
+import casestudy.Methods.HoldMethod;
+import casestudy.Methods.MailMethod;
 import casestudy.Payment.PayCheck;
 import casestudy.Payment.PaydayTransaction;
 import casestudy.PayrollDatabase.PayrollDatabase;

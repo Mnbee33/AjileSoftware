@@ -1,6 +1,6 @@
 package casestudy.Affiliations;
 
-import casestudy.Methods.ChangeEmployeeTransaction;
+import casestudy.GeneralTransactions.ChangeEmployeeTransaction;
 import casestudy.PayrollDomain.Affiliation;
 import casestudy.PayrollDomain.Employee;
 

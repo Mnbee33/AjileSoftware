@@ -1,5 +1,6 @@
-package casestudy.Methods;
+package casestudy.MethodTransactions;
 
+import casestudy.Methods.DirectMethod;
 import casestudy.PayrollDomain.PaymentMethod;
 
 public class ChangeDirectTransaction extends ChangeMethodTransaction {

@@ -1,5 +1,6 @@
-package casestudy.Methods;
+package casestudy.MethodTransactions;
 
+import casestudy.GeneralTransactions.ChangeEmployeeTransaction;
 import casestudy.PayrollDomain.Employee;
 import casestudy.PayrollDomain.PaymentMethod;
 

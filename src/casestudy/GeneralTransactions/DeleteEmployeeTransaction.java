@@ -1,7 +1,7 @@
-package casestudy.OperationEmployee;
+package casestudy.GeneralTransactions;
 
 import casestudy.PayrollDatabase.PayrollDatabase;
-import casestudy.PayrollDomain.Transaction;
+import casestudy.TransactionApplication.Transaction;
 
 public class DeleteEmployeeTransaction implements Transaction {
     private int itsEmpId;

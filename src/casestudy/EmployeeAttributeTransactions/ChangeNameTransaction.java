@@ -1,6 +1,6 @@
-package casestudy.EmployeeAttribute;
+package casestudy.EmployeeAttributeTransactions;
 
-import casestudy.Methods.ChangeEmployeeTransaction;
+import casestudy.GeneralTransactions.ChangeEmployeeTransaction;
 import casestudy.PayrollDomain.Employee;
 
 public class ChangeNameTransaction extends ChangeEmployeeTransaction {

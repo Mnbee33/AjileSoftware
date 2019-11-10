@@ -1,8 +1,12 @@
-package casestudy.OperationEmployee;
+package casestudy.GeneralTransactions;
 
 import casestudy.Methods.HoldMethod;
 import casestudy.PayrollDatabase.PayrollDatabase;
-import casestudy.PayrollDomain.*;
+import casestudy.PayrollDomain.Employee;
+import casestudy.PayrollDomain.PaymentClassification;
+import casestudy.PayrollDomain.PaymentMethod;
+import casestudy.PayrollDomain.PaymentSchedule;
+import casestudy.TransactionApplication.Transaction;
 
 public abstract class AddEmployeeTransaction implements Transaction {
     private int itsEmpId;

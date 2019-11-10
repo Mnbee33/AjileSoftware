@@ -2,7 +2,7 @@ package casestudy.Payment;
 
 import casestudy.PayrollDatabase.PayrollDatabase;
 import casestudy.PayrollDomain.Employee;
-import casestudy.PayrollDomain.Transaction;
+import casestudy.TransactionApplication.Transaction;
 
 import java.time.LocalDate;
 import java.util.HashMap;
