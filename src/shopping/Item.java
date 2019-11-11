@@ -1,7 +1,7 @@
 package shopping;
 
 public class Item {
-    private String orderId;
+    private int orderId;
     private int quantity;
     private Product product;
 

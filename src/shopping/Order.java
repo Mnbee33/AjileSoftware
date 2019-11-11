@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Order {
-    private String orderId;
+    private int orderId;
     private LocalDate date;
     private String status;
     private List<Item> items = new ArrayList<>();
