@@ -1,9 +1,14 @@
 package digitalClock;
 
-public class MockTimeSink implements ClockObserver {
+public class MockTimeSink implements Observer {
     private int itsHours;
     private int itsMinutes;
     private int itsSeconds;
+    private TimeSource itsSource;
+
+    public MockTimeSink(TimeSource source) {
+        itsSource = source;
+    }
 
     public int getHours() {
         return itsHours;
@@ -17,10 +22,9 @@ public class MockTimeSink implements ClockObserver {
         return itsSeconds;
     }
 
-    @Override
-    public void update(int hours, int minutes, int seconds) {
-        itsHours = hours;
-        itsMinutes = minutes;
-        itsSeconds = seconds;
+    public void update() {
+        itsHours = itsSource.getHours();
+        itsMinutes = itsSource.getMinutes();
+        itsSeconds = itsSource.getSeconds();
     }
 }

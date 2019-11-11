@@ -13,20 +13,32 @@ public class TestClockDriver {
     @BeforeEach
     void setUp() {
         source = new MockTimeSource();
-        sink = new MockTimeSink();
+        sink = new MockTimeSink(source);
         source.registerObserver(sink);
     }
 
     @Test
     void testTimeChange() {
         source.setTime(3, 4, 5);
-        assertEquals(3, sink.getHours());
-        assertEquals(4, sink.getMinutes());
-        assertEquals(5, sink.getSeconds());
+        assertSinkEquals(sink, 3, 4, 5);
 
         source.setTime(7, 8, 9);
-        assertEquals(7, sink.getHours());
-        assertEquals(8, sink.getMinutes());
-        assertEquals(9, sink.getSeconds());
+        assertSinkEquals(sink, 7, 8, 9);
+    }
+
+    @Test
+    void testMultipleSinks() {
+        MockTimeSink sink2 = new MockTimeSink(source);
+        source.registerObserver(sink2);
+        source.setTime(12, 13, 14);
+
+        assertSinkEquals(sink, 12, 13, 14);
+        assertSinkEquals(sink2, 12, 13, 14);
+    }
+
+    private void assertSinkEquals(MockTimeSink sink, int hours, int minutes, int seconds) {
+        assertEquals(hours, this.sink.getHours());
+        assertEquals(minutes, this.sink.getMinutes());
+        assertEquals(seconds, this.sink.getSeconds());
     }
 }

@@ -1,5 +1,9 @@
 package digitalClock;
 
 public interface TimeSource {
-    void registerObserver(ClockObserver observer);
+    int getHours();
+
+    int getMinutes();
+
+    int getSeconds();
 }
