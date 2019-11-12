@@ -12,4 +12,8 @@ public class OrderData {
     public int getOrderId() {
         return orderId;
     }
+
+    public String getCustomerId() {
+        return cusid;
+    }
 }

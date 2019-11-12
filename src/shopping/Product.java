@@ -1,16 +1,9 @@
 package shopping;
 
-public class Product {
-    private String name;
-    private int price;
-    private String sku;
+public interface Product {
+    int getPrice() throws Exception;
 
-    public Product(String name, int price) {
-        this.name = name;
-        this.price = price;
-    }
+    String getName() throws Exception;
 
-    public int getPrice() {
-        return price;
-    }
+    String getSku() throws Exception;
 }
